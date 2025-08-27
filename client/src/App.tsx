@@ -6,7 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { useAuth } from "@/hooks/use-auth";
 import NotFound from "@/pages/not-found";
-import Login from "@/pages/login";
+import AuthPage from "@/pages/auth";
 import Dashboard from "@/pages/dashboard";
 
 function Router() {
@@ -26,9 +26,15 @@ function Router() {
   return (
     <Switch>
       {!user ? (
-        <Route path="/" component={Login} />
+        <>
+          <Route path="/" component={AuthPage} />
+          <Route path="/auth" component={AuthPage} />
+        </>
       ) : (
-        <Route path="/" component={Dashboard} />
+        <>
+          <Route path="/" component={Dashboard} />
+          <Route path="/dashboard" component={Dashboard} />
+        </>
       )}
       <Route component={NotFound} />
     </Switch>

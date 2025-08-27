@@ -43,9 +43,10 @@ export const portfolioHoldings = pgTable("portfolio_holdings", {
   userId: varchar("user_id").notNull().references(() => users.id, { onDelete: 'cascade' }),
   symbol: varchar("symbol").notNull(),
   companyName: varchar("company_name").notNull(),
-  shares: decimal("shares", { precision: 10, scale: 4 }).notNull(),
-  avgCost: decimal("avg_cost", { precision: 10, scale: 2 }).notNull(),
-  currentPrice: decimal("current_price", { precision: 10, scale: 2 }),
+  assetType: varchar("asset_type").notNull().default('stock'), // 'stock', 'etf', 'crypto', 'commodity', 'forex'
+  shares: decimal("shares", { precision: 15, scale: 8 }).notNull(), // Increased precision for crypto
+  avgCost: decimal("avg_cost", { precision: 15, scale: 8 }).notNull(), // Increased precision for crypto/forex
+  currentPrice: decimal("current_price", { precision: 15, scale: 8 }),
   sector: varchar("sector"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
@@ -57,6 +58,7 @@ export const watchlist = pgTable("watchlist", {
   userId: varchar("user_id").notNull().references(() => users.id, { onDelete: 'cascade' }),
   symbol: varchar("symbol").notNull(),
   companyName: varchar("company_name").notNull(),
+  assetType: varchar("asset_type").notNull().default('stock'), // 'stock', 'etf', 'crypto', 'commodity', 'forex'
   sector: varchar("sector"),
   addedAt: timestamp("added_at").defaultNow(),
 });

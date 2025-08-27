@@ -143,17 +143,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
         userId: req.user!.id,
       });
 
-      // Get company info
-      const companyInfo = await stockApi.getCompanyInfo(holdingData.symbol);
-      if (companyInfo) {
-        holdingData.companyName = companyInfo.name;
-        holdingData.sector = companyInfo.sector;
-      }
-
-      // Get current price
+      // Get company info and current price
       const quote = await stockApi.getQuote(holdingData.symbol);
       if (quote) {
         holdingData.currentPrice = quote.price.toString();
+        holdingData.companyName = quote.companyName || holdingData.companyName;
+        holdingData.sector = quote.sector || holdingData.sector;
+        holdingData.assetType = quote.assetType;
+      }
+
+      // Fallback to company info API if quote doesn't have details
+      if (!holdingData.companyName || !holdingData.sector) {
+        const companyInfo = await stockApi.getCompanyInfo(holdingData.symbol);
+        if (companyInfo) {
+          holdingData.companyName = holdingData.companyName || companyInfo.name;
+          holdingData.sector = holdingData.sector || companyInfo.sector;
+        }
       }
 
       const holding = await storage.addToPortfolio(holdingData);
