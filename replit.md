@@ -60,4 +60,19 @@ JWT-based authentication system handles user registration and login. Passwords a
 - **Drizzle ORM**: Type-safe database operations with schema management
 - **Migration system**: Drizzle Kit for database schema versioning
 
-The application is configured for deployment on Replit with specific build scripts and environment variable management for different deployment environments.
+The application is configured for deployment on both Replit and Render with specific build scripts, environment variable management, and production-ready configurations.
+
+## Deployment Configuration
+
+### Render Deployment
+- **render.yaml**: Blueprint configuration for automatic deployment
+- **Dockerfile**: Container configuration with multi-stage build
+- **Health Check**: `/api/health` endpoint for monitoring
+- **Database**: Auto-provisioned PostgreSQL with connection pooling
+- **Environment**: Production-ready with proper PORT handling and static file serving
+
+### Build Configuration
+- **Production Build**: Vite frontend build + ESBuild backend bundle
+- **Static Assets**: Properly served in production environment
+- **Port Configuration**: Dynamic PORT environment variable support
+- **Database Schema**: Drizzle ORM with push-based migrations
