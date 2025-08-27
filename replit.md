@@ -1,6 +1,15 @@
 # Overview
 
-Neufin is a retail investor platform that provides real-time sentiment-driven market intelligence. This is a full-stack web application designed to help retail investors make informed decisions by combining stock market data with sentiment analysis and proprietary alpha scoring algorithms. The platform features a modern dark-themed dashboard that displays portfolio performance, watchlists, market sentiment trends, and actionable investment signals.
+Neufin is a retail investor platform that provides real-time sentiment-driven market intelligence. This is a full-stack web application designed to help retail investors make informed decisions by combining stock market data with sentiment analysis and proprietary alpha scoring algorithms. The platform features a modern dark-themed dashboard with functional navigation tabs, comprehensive portfolio management, manual data population capabilities, and real-time market data integration across multiple asset types (stocks, ETFs, crypto, commodities, forex).
+
+## Recent Changes (January 2025)
+- ✅ Fixed navigation tabs - all sidebar links now properly switch between views
+- ✅ Resolved JWT authentication issues - tokens properly included in API requests  
+- ✅ Added logout functionality with user dropdown menu in header
+- ✅ Created comprehensive portfolio management with manual population
+- ✅ Added sample data feature for testing alpha signals and market intelligence
+- ✅ Enhanced multi-asset support with tabbed input forms
+- ✅ Integrated real-time market data services (Yahoo Finance/Alpha Vantage)
 
 # User Preferences
 

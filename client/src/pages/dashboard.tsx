@@ -8,6 +8,7 @@ import Watchlist from "@/components/watchlist/watchlist";
 import AlphaSignals from "@/components/alpha/alpha-signals";
 import MarketNews from "@/components/news/market-news";
 import { AddHoldingForm } from "@/components/portfolio/add-holding-form";
+import PortfolioManagement from "@/components/portfolio/portfolio-management";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Plus } from "lucide-react";
@@ -23,10 +24,7 @@ export default function Dashboard() {
         return (
           <div className="space-y-6">
             <PortfolioOverview />
-            <PortfolioChart 
-              selectedTimeframe={selectedTimeframe}
-              onTimeframeChange={setSelectedTimeframe}
-            />
+            <PortfolioManagement />
           </div>
         );
       
