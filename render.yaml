@@ -22,6 +22,6 @@ services:
 
 databases:
   - name: neufin-db
-    plan: starter
+    plan: free
     databaseName: neufin
     user: neufin
