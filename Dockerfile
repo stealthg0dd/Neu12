@@ -15,7 +15,7 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Remove dev dependencies after build
+# Remove dev dependencies after build but keep runtime essentials
 RUN npm prune --production
 
 # Expose port
