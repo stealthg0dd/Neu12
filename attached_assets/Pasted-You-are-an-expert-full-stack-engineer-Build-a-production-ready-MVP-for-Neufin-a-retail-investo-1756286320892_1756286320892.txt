@@ -1,0 +1,31 @@
+You are an expert full-stack engineer. Build a production-ready MVP for **Neufin**, a retail investor platform for real-time sentiment-driven market intelligence. The stack should be:
+
+- **Backend:** FastAPI (Python) for REST API, integrated with yfinance / Alpha Vantage / Finnhub / Polygon.io for real-time stock & market data (choose free tier APIs where possible).
+- **Frontend:** React + Vite + TailwindCSS (dark mode UI). Provide simple, modern dashboard UI with cards, charts, and sentiment visualization.
+- **Database:** PostgreSQL (use SQLAlchemy ORM) for storing user portfolios, watchlists, and sentiment signals.
+- **Auth:** JWT-based login/signup system for retail investors.
+- **Key Features for MVP:**
+  1. Real-time stock quotes & news sentiment feed.
+  2. User can add stocks to their portfolio & watchlist.
+  3. Sentiment analysis of latest market news (use HuggingFace sentiment model or OpenAI API).
+  4. Dashboard view: Portfolio performance, stock prices, sentiment scores visualized via charts.
+  5. Basic "Alpha Signature" metric → combine sentiment, volatility, and price momentum into one score per stock.
+- **Deployment:** Configure Render deployment (separate backend and frontend services). Add Procfile & requirements.txt for FastAPI backend and package.json for frontend.
+
+### Technical Requirements:
+- **Backend:** 
+  - Endpoints: `/auth/signup`, `/auth/login`, `/portfolio`, `/watchlist`, `/market/sentiment`, `/market/alpha-signature`
+  - Real-time API fetch from stock data providers (ensure no demo/mock data).
+  - Cache API responses with Redis for performance.
+
+- **Frontend:** 
+  - Login/signup page, dashboard, stock search + add to watchlist/portfolio.
+  - Charts using Recharts for prices, portfolio performance, and sentiment over time.
+  - Tailwind dark theme, responsive grid layout.
+
+- **Other:**
+  - Use Dockerfile for backend + frontend.
+  - Prepare deployment-ready configs for Render (render.yaml or separate build instructions).
+  - Write minimal unit tests (Pytest for backend).
+
+Deliver a fully working repo with backend + frontend + db integration, ready for deployment on Render. 
