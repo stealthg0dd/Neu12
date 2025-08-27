@@ -37,6 +37,12 @@ A production-ready retail investor platform providing real-time sentiment analys
    - `OPENAI_API_KEY`: Your OpenAI API key
    - `ALPHA_VANTAGE_API_KEY`: Your Alpha Vantage API key (optional)
 
+3. **Build Process**:
+   - Frontend: Built with Vite (React + TypeScript)
+   - Backend: Built with ESBuild targeting production server
+   - Static assets: Served from `dist/public/`
+   - Production server: Runs without Vite dependencies
+
 3. **Database Setup**:
    - PostgreSQL database will be automatically provisioned
    - Database schema will be created during first deployment
