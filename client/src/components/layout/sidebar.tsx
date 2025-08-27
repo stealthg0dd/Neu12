@@ -2,15 +2,20 @@ import { TrendingUp, LayoutDashboard, Briefcase, Heart, Newspaper, Activity, Tar
 import { useAuth } from "@/hooks/use-auth";
 
 const navigationItems = [
-  { icon: LayoutDashboard, label: "Dashboard", href: "#", active: true },
-  { icon: Briefcase, label: "Portfolio", href: "#", active: false },
-  { icon: Heart, label: "Watchlist", href: "#", active: false },
-  { icon: Newspaper, label: "Market News", href: "#", active: false },
-  { icon: Activity, label: "Sentiment Tracker", href: "#", active: false },
-  { icon: Target, label: "Alpha Signals", href: "#", active: false },
+  { icon: LayoutDashboard, label: "Dashboard", id: "dashboard" },
+  { icon: Briefcase, label: "Portfolio", id: "portfolio" },
+  { icon: Heart, label: "Watchlist", id: "watchlist" },
+  { icon: Newspaper, label: "Market News", id: "market-news" },
+  { icon: Activity, label: "Sentiment Tracker", id: "sentiment" },
+  { icon: Target, label: "Alpha Signals", id: "alpha" },
 ];
 
-export default function Sidebar() {
+interface SidebarProps {
+  activeView: string;
+  onViewChange: (view: string) => void;
+}
+
+export default function Sidebar({ activeView, onViewChange }: SidebarProps) {
   const { user, logout } = useAuth();
 
   return (
@@ -30,20 +35,21 @@ export default function Sidebar() {
       <nav className="flex-1 p-4 space-y-2">
         {navigationItems.map((item) => {
           const Icon = item.icon;
+          const isActive = activeView === item.id;
           return (
-            <a
+            <button
               key={item.label}
-              href={item.href}
-              className={`flex items-center space-x-3 px-3 py-2 rounded-lg font-medium transition-colors ${
-                item.active 
+              onClick={() => onViewChange(item.id)}
+              className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg font-medium transition-colors text-left ${
+                isActive 
                   ? "bg-primary text-primary-foreground" 
                   : "text-muted-foreground hover:bg-secondary hover:text-foreground"
               }`}
-              data-testid={`nav-${item.label.toLowerCase().replace(" ", "-")}`}
+              data-testid={`nav-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
             >
               <Icon className="w-5 h-5" />
               <span>{item.label}</span>
-            </a>
+            </button>
           );
         })}
       </nav>
