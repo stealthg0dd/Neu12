@@ -13,7 +13,9 @@ module.exports = {
         surface: "var(--color-surface)",
         accent: "var(--color-accent)",
         border: "var(--color-border)",
-        text: "var(--color-text)"
+        text: "var(--color-text)",
+        "text-muted": "var(--color-text-muted)",
+        "text-heading": "var(--color-text-heading)"
       },
       backgroundColor: {
         background: "var(--color-background)",

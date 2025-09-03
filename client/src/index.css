@@ -3,13 +3,15 @@
 @tailwind utilities;
 
 :root {
-  --color-primary: hsl(220, 90%, 56%);
-  --color-secondary: hsl(340, 82%, 52%);
+  --color-primary: hsl(220, 90%, 70%);
+  --color-secondary: hsl(340, 82%, 65%);
   --color-background: hsl(240, 10%, 8%);
   --color-surface: hsl(240, 8%, 12%);
-  --color-accent: hsl(48, 100%, 67%);
-  --color-border: hsl(240, 10%, 20%);
-  --color-text: hsl(0, 0%, 100%);
+  --color-accent: hsl(48, 100%, 75%);
+  --color-border: hsl(240, 10%, 25%);
+  --color-text: hsl(0, 0%, 95%);
+  --color-text-muted: hsl(0, 0%, 75%);
+  --color-text-heading: hsl(0, 0%, 98%);
 }
 
 @layer base {
@@ -48,6 +50,20 @@
   border-color: var(--color-border) !important;
 }
 
+/* Enhanced text visibility classes */
+h1, h2, h3, h4, h5, h6, .text-xl, .text-2xl, .text-3xl, .text-4xl {
+  color: var(--color-text-heading) !important;
+  font-weight: 600 !important;
+}
+
+.text-muted-foreground, .text-gray-500, .text-gray-600 {
+  color: var(--color-text-muted) !important;
+}
+
+.text-foreground, .text-gray-900, .text-gray-800 {
+  color: var(--color-text) !important;
+}
+
 /* Force dark backgrounds on common white elements */
 .bg-surface {
   background-color: var(--color-surface) !important;
@@ -63,6 +79,49 @@
 
 .text-gray-900 {
   color: var(--color-text) !important;
+}
+
+/* Enhanced text visibility for better readability */
+.text-gray-700 {
+  color: var(--color-text) !important;
+}
+
+.text-gray-600 {
+  color: var(--color-text-muted) !important;
+}
+
+.text-gray-500 {
+  color: var(--color-text-muted) !important;
+}
+
+/* Logo and brand text enhancement */
+.logo-text, [data-testid*="logo"], [class*="logo"] {
+  color: var(--color-text-heading) !important;
+  font-weight: 700 !important;
+}
+
+/* Dashboard title and headings */
+.dashboard-title, .page-title {
+  color: var(--color-text-heading) !important;
+  font-weight: 600 !important;
+}
+
+/* Card and component text visibility */
+.card-title, .card-header {
+  color: var(--color-text-heading) !important;
+}
+
+.card-content, .card-description {
+  color: var(--color-text) !important;
+}
+
+/* Navigation and button text */
+nav, .nav-item, .nav-link {
+  color: var(--color-text) !important;
+}
+
+button {
+  color: var(--color-text-heading) !important;
 }
 
 /* Custom scrollbar for dark theme */
