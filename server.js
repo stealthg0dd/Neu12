@@ -8,13 +8,61 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 10000;
 
+// JSON body parser middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // Serve frontend from client/dist
 const clientBuildPath = path.resolve(__dirname, "../client/dist");
 app.use(express.static(clientBuildPath));
 
-// API routes
+// Health check endpoint
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
+});
+
+// Demo login endpoint for quick access
+app.post("/api/auth/login", (req, res) => {
+  const { email, password } = req.body;
+
+  // Demo credentials
+  if (email === "demo@neufin.com" && password === "demo123") {
+    return res.json({ 
+      token: "demo-jwt-token-abc123", 
+      user: { 
+        id: "admin-001",
+        email: "demo@neufin.com", 
+        firstName: "Demo", 
+        lastName: "User" 
+      } 
+    });
+  }
+
+  // Admin credentials (existing)
+  if (email === "admin@neufin.com" && password === "admin123") {
+    return res.json({ 
+      token: "admin-jwt-token-xyz789", 
+      user: { 
+        id: "admin-001",
+        email: "admin@neufin.com", 
+        firstName: "Admin", 
+        lastName: "User" 
+      } 
+    });
+  }
+
+  return res.status(401).json({ message: "Invalid credentials" });
+});
+
+// User info endpoint 
+app.get("/api/auth/me", (req, res) => {
+  // For demo purposes, return the admin user
+  res.json({
+    id: "admin-001",
+    email: "admin@neufin.com",
+    firstName: "Admin", 
+    lastName: "User"
+  });
 });
 
 // Fallback to index.html for SPA

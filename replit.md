@@ -3,10 +3,11 @@
 Neufin is a retail investor platform that provides real-time sentiment-driven market intelligence. This is a full-stack web application designed to help retail investors make informed decisions by combining stock market data with sentiment analysis and proprietary alpha scoring algorithms. The platform features a modern dark-themed dashboard with functional navigation tabs, comprehensive portfolio management, manual data population capabilities, and real-time market data integration across multiple asset types (stocks, ETFs, crypto, commodities, forex).
 
 ## Recent Changes (September 2025)
+- ✅ **LOGIN SIMPLIFICATION**: Added demo account (demo@neufin.com / demo123) for easy access
+- ✅ **EXPRESS MIDDLEWARE**: Added JSON body parser and simplified authentication endpoints
 - ✅ **DEPLOYMENT COMPLETION**: Finalized comprehensive Render deployment fix with proper static file serving
 - ✅ **DARK THEME RESTORATION**: Implemented forced dark theme with enhanced text visibility (95-98% white text)
 - ✅ **TEXT CONTRAST FIX**: Made Dashboard title, Neufin logo, and all text elements clearly visible
-- ✅ **EXPRESS MIDDLEWARE**: Fixed TypeScript compilation with proper Express.Request interface extension  
 - ✅ **BUILD OPTIMIZATION**: Frontend builds to client/dist, backend bundles with ESBuild for production
 - ✅ **SERVER CONFIGURATION**: Created production-ready server.js with correct path resolution
 - ✅ **CSS VARIABLES**: Enhanced color system with --color-text-heading (98% white) and --color-text-muted (75% white)
