@@ -92,7 +92,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Protected routes
-  app.get('/api/auth/me', authenticateToken, async (req: AuthRequest, res) => {
+  app.get('/api/auth/me', authenticateToken, async (req, res) => {
     try {
       const user = await storage.getUser(req.user!.id);
       if (!user) {
@@ -112,7 +112,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Portfolio routes
-  app.get('/api/portfolio', authenticateToken, async (req: AuthRequest, res) => {
+  app.get('/api/portfolio', authenticateToken, async (req, res) => {
     try {
       const holdings = await storage.getPortfolioByUserId(req.user!.id);
       
@@ -148,7 +148,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post('/api/portfolio', authenticateToken, async (req: AuthRequest, res) => {
+  app.post('/api/portfolio', authenticateToken, async (req, res) => {
     try {
       const holdingData = insertPortfolioHoldingSchema.parse({
         ...req.body,
@@ -181,7 +181,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete('/api/portfolio/:id', authenticateToken, async (req: AuthRequest, res) => {
+  app.delete('/api/portfolio/:id', authenticateToken, async (req, res) => {
     try {
       await storage.removeFromPortfolio(req.params.id);
       res.json({ message: 'Holding removed from portfolio' });
@@ -192,7 +192,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Watchlist routes
-  app.get('/api/watchlist', authenticateToken, async (req: AuthRequest, res) => {
+  app.get('/api/watchlist', authenticateToken, async (req, res) => {
     try {
       const watchlist = await storage.getWatchlistByUserId(req.user!.id);
       
@@ -225,7 +225,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post('/api/watchlist', authenticateToken, async (req: AuthRequest, res) => {
+  app.post('/api/watchlist', authenticateToken, async (req, res) => {
     try {
       const watchlistData = insertWatchlistSchema.parse({
         ...req.body,
@@ -247,7 +247,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete('/api/watchlist/:id', authenticateToken, async (req: AuthRequest, res) => {
+  app.delete('/api/watchlist/:id', authenticateToken, async (req, res) => {
     try {
       await storage.removeFromWatchlist(req.params.id);
       res.json({ message: 'Item removed from watchlist' });
@@ -434,7 +434,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // AI Chat Analysis Route
-  app.post('/api/chat/analyze', authenticateToken, async (req: AuthRequest, res) => {
+  app.post('/api/chat/analyze', authenticateToken, async (req, res) => {
     try {
       const inputData = await validateChatInput({
         ...req.body,
@@ -454,7 +454,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Market Trend Analysis Routes
-  app.get('/api/analysis/market-trend', authenticateToken, async (req: AuthRequest, res) => {
+  app.get('/api/analysis/market-trend', authenticateToken, async (req, res) => {
     try {
       const analysis = await getCachedMarketTrendAnalysis(req.user!.id);
       res.json(analysis);
@@ -464,7 +464,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post('/api/analysis/market-trend/refresh', authenticateToken, async (req: AuthRequest, res) => {
+  app.post('/api/analysis/market-trend/refresh', authenticateToken, async (req, res) => {
     try {
       const analysis = await refreshMarketTrendAnalysis(req.user!.id);
       res.json(analysis);
@@ -475,7 +475,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Behavioral Bias Analysis Routes
-  app.get('/api/behavioral-analysis', authenticateToken, async (req: AuthRequest, res) => {
+  app.get('/api/behavioral-analysis', authenticateToken, async (req, res) => {
     try {
       const analysis = await behavioralBiasAnalyzer.analyzeBehavioralBiases(req.user!.id);
       res.json(analysis);
@@ -485,7 +485,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post('/api/behavioral-analysis/refresh', authenticateToken, async (req: AuthRequest, res) => {
+  app.post('/api/behavioral-analysis/refresh', authenticateToken, async (req, res) => {
     try {
       const analysis = await behavioralBiasAnalyzer.analyzeBehavioralBiases(req.user!.id);
       res.json(analysis);
