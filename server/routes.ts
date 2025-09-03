@@ -5,6 +5,7 @@ import { stockApi } from "./services/stockApi";
 import { sentimentAnalysis } from "./services/sentimentAnalysis";
 import { alphaSignature } from "./services/alphaSignature";
 import { analyzeChatMessage, validateChatInput } from "./services/chatAnalysis";
+import { getCachedMarketTrendAnalysis, refreshMarketTrendAnalysis } from "./services/marketTrendAnalysis";
 import { authenticateToken, generateToken, hashPassword, comparePassword, type AuthRequest } from "./middleware/auth";
 import { insertUserSchema, insertPortfolioHoldingSchema, insertWatchlistSchema } from "@shared/schema";
 import { z } from "zod";
@@ -448,6 +449,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } else {
         res.status(500).json({ message: 'Failed to analyze chat message' });
       }
+    }
+  });
+
+  // Market Trend Analysis Routes
+  app.get('/api/analysis/market-trend', authenticateToken, async (req: AuthRequest, res) => {
+    try {
+      const analysis = await getCachedMarketTrendAnalysis(req.user!.id);
+      res.json(analysis);
+    } catch (error) {
+      console.error('Market trend analysis error:', error);
+      res.status(500).json({ message: 'Failed to generate market trend analysis' });
+    }
+  });
+
+  app.post('/api/analysis/market-trend/refresh', authenticateToken, async (req: AuthRequest, res) => {
+    try {
+      const analysis = await refreshMarketTrendAnalysis(req.user!.id);
+      res.json(analysis);
+    } catch (error) {
+      console.error('Market trend analysis refresh error:', error);
+      res.status(500).json({ message: 'Failed to refresh market trend analysis' });
     }
   });
 

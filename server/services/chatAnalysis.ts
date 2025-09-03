@@ -70,7 +70,7 @@ Respond with JSON in this exact format:
         { role: "user", content: message }
       ],
       response_format: { type: "json_object" },
-      max_tokens: 1000,
+      max_completion_tokens: 1000,
       temperature: 0.7,
     });
 

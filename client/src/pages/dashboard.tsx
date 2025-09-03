@@ -10,6 +10,7 @@ import MarketNews from "@/components/news/market-news";
 import { AddHoldingForm } from "@/components/portfolio/add-holding-form";
 import PortfolioManagement from "@/components/portfolio/portfolio-management";
 import { AIChatWidget } from "@/components/chat/ai-chat-widget";
+import { MarketTrendWidget } from "@/components/analysis/market-trend-widget";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Plus } from "lucide-react";
@@ -60,6 +61,11 @@ export default function Dashboard() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
               <Watchlist />
               <AlphaSignals />
+            </div>
+            
+            {/* Market Trend Analysis Widget */}
+            <div className="mb-8">
+              <MarketTrendWidget />
             </div>
             
             {/* Market News */}
