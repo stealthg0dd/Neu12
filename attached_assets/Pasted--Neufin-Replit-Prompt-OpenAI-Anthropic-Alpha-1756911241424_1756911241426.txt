@@ -1,0 +1,137 @@
+# ===============================================
+# Neufin Replit Prompt: OpenAI + Anthropic / Alpha Vantage + Finnhub Fallback
+# ===============================================
+
+echo "Installing dependencies..."
+npm install axios dotenv
+
+# 1. Update Chat API to fallback to Anthropic Claude
+cat > server/routes/chat.ts <<'EOL'
+import express from "express";
+import OpenAI from "openai";
+import axios from "axios";
+const router = express.Router();
+
+const OPENAI_KEY = process.env.OPENAI_API_KEY;
+const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY;
+
+router.post("/", async (req, res) => {
+  const { message } = req.body;
+  try {
+    if (OPENAI_KEY) {
+      const openai = new OpenAI({ apiKey: OPENAI_KEY });
+      const response = await openai.chat.completions.create({
+        model: "gpt-5-mini",
+        messages: [{ role: "user", content: message }]
+      });
+      return res.json({ reply: response.choices[0].message.content });
+    } else if (ANTHROPIC_KEY) {
+      const resp = await axios.post("https://api.anthropic.com/v1/complete", {
+        prompt: message,
+        model: "claude-v1",
+        max_tokens_to_sample: 300
+      }, { headers: { "x-api-key": ANTHROPIC_KEY }});
+      return res.json({ reply: resp.data.completion });
+    } else {
+      return res.json({ reply: "Demo reply: AI service unavailable" });
+    }
+  } catch (e) {
+    console.error(e);
+    res.json({ reply: "Demo reply: AI service unavailable" });
+  }
+});
+
+export default router;
+EOL
+
+# 2. Update Market API to fallback to Finnhub
+cat > server/routes/market.ts <<'EOL'
+import express from "express";
+import axios from "axios";
+const router = express.Router();
+
+const ALPHA_KEY = process.env.ALPHA_VANTAGE_KEY;
+const FINNHUB_KEY = process.env.FINNHUB_API_KEY;
+
+router.get("/trends", async (req, res) => {
+  const symbols = req.query.symbols ? req.query.symbols.split(",") : ["AAPL","TSLA"];
+  const data = [];
+  try {
+    if (ALPHA_KEY) {
+      for(const s of symbols){
+        const r = await axios.get("https://www.alphavantage.co/query", {
+          params:{ function:"GLOBAL_QUOTE", symbol:s, apikey:ALPHA_KEY }
+        });
+        const q = r.data["Global Quote"];
+        data.push({ symbol: s, price: q["05. price"], change: q["10. change percent"] });
+      }
+    } else if (FINNHUB_KEY) {
+      for(const s of symbols){
+        const r = await axios.get(`https://finnhub.io/api/v1/quote`, {
+          params:{ symbol: s, token: FINNHUB_KEY }
+        });
+        data.push({ symbol: s, price: r.data.c, change: ((r.data.c - r.data.pc)/r.data.pc*100).toFixed(2) + "%" });
+      }
+    } else {
+      symbols.forEach(s => data.push({ symbol: s, price: 0, change: "0%" }));
+    }
+    res.json(data);
+  } catch(e){
+    console.error(e);
+    symbols.forEach(s => data.push({ symbol: s, price: 0, change: "0%" }));
+    res.json(data);
+  }
+});
+
+export default router;
+EOL
+
+# 3. Update News API to fallback from Alpha Vantage to Finnhub
+cat > server/routes/news.ts <<'EOL'
+import express from "express";
+import axios from "axios";
+const router = express.Router();
+
+const ALPHA_KEY = process.env.ALPHA_VANTAGE_KEY;
+const FINNHUB_KEY = process.env.FINNHUB_API_KEY;
+
+router.get("/", async (req, res) => {
+  const symbols = req.query.symbols?.split(",") || ["AAPL","TSLA"];
+  const newsData = [];
+  try {
+    if (ALPHA_KEY) {
+      for(const symbol of symbols){
+        const response = await axios.get("https://www.alphavantage.co/query", {
+          params: { function: "NEWS_SENTIMENT", tickers: symbol, apikey: ALPHA_KEY, sort: "LATEST" }
+        });
+        if(response.data.feed){
+          response.data.feed.slice(0,5).forEach(item => newsData.push({
+            symbol, title:item.title, url:item.url, source:item.source, publishedAt:item.time_published, sentiment:item.overall_sentiment_label
+          }));
+        }
+      }
+    } else if (FINNHUB_KEY) {
+      for(const symbol of symbols){
+        const r = await axios.get(`https://finnhub.io/api/v1/company-news`, {
+          params:{ symbol, from: new Date(Date.now()-7*24*60*60*1000).toISOString().split("T")[0], to: new Date().toISOString().split("T")[0], token: FINNHUB_KEY }
+        });
+        r.data.slice(0,5).forEach(item => newsData.push({
+          symbol, title:item.headline, url:item.url, source:item.source, publishedAt:item.datetime*1000, sentiment:"neutral"
+        }));
+      }
+    }
+    res.json(newsData);
+  } catch(e){
+    console.error(e);
+    res.json([{ symbol:"AAPL", title:"Demo news headline", source:"Demo News", publishedAt:new Date().toISOString(), sentiment:"neutral" }]);
+  }
+});
+
+export default router;
+EOL
+
+# 4. Rebuild backend & frontend
+rm -rf dist client/dist
+npm run build
+
+echo "✅ Replit prompt applied: Anthropic + Finnhub fallback added. Market feeds, news, and AI chat now resilient for Render deployment."

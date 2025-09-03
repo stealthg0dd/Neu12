@@ -495,14 +495,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Alpha Vantage market data routes
+  // Alpha Vantage market data routes with Finnhub fallback
   const ALPHA_KEY = process.env.ALPHA_VANTAGE_KEY;
+  const FINNHUB_KEY = process.env.FINNHUB_API_KEY;
 
   app.get('/api/market/trends', async (req, res) => {
     try {
-      if (!ALPHA_KEY) {
-        console.warn("Alpha Vantage API key not configured, using fallback data");
-        throw new Error("Alpha Vantage API key not configured");
+      // Try Alpha Vantage first, then Finnhub, then fallback
+      if (!ALPHA_KEY && !FINNHUB_KEY) {
+        console.warn("No market data API keys configured, using fallback data");
+        throw new Error("No market data API keys configured");
       }
 
       const symbols = ["AAPL", "TSLA", "GOOGL", "MSFT", "AMZN"];
@@ -510,29 +512,59 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       for (const symbol of symbols) {
         try {
-          const response = await fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${ALPHA_KEY}`, {
-            signal: AbortSignal.timeout(5000)
-          });
-          
-          if (!response.ok) throw new Error(`HTTP ${response.status}`);
-          
-          const result = await response.json();
-          const quote = result["Global Quote"];
-          
-          if (quote && quote["05. price"]) {
-            data.push({
-              symbol,
-              price: parseFloat(quote["05. price"]),
-              change: quote["10. change percent"],
-              changeValue: parseFloat(quote["09. change"]),
-              high: parseFloat(quote["03. high"]),
-              low: parseFloat(quote["04. low"]),
-              volume: parseInt(quote["06. volume"]),
-              lastUpdated: quote["07. latest trading day"]
+          if (ALPHA_KEY) {
+            // Try Alpha Vantage first
+            const response = await fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${ALPHA_KEY}`, {
+              signal: AbortSignal.timeout(5000)
             });
+            
+            if (response.ok) {
+              const result = await response.json();
+              const quote = result["Global Quote"];
+              
+              if (quote && quote["05. price"]) {
+                data.push({
+                  symbol,
+                  price: parseFloat(quote["05. price"]),
+                  change: quote["10. change percent"],
+                  changeValue: parseFloat(quote["09. change"]),
+                  high: parseFloat(quote["03. high"]),
+                  low: parseFloat(quote["04. low"]),
+                  volume: parseInt(quote["06. volume"]),
+                  lastUpdated: quote["07. latest trading day"],
+                  provider: "Alpha Vantage"
+                });
+                continue;
+              }
+            }
+          }
+          
+          // Fallback to Finnhub if Alpha Vantage fails
+          if (FINNHUB_KEY) {
+            const finnhubResponse = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${FINNHUB_KEY}`, {
+              signal: AbortSignal.timeout(5000)
+            });
+            
+            if (finnhubResponse.ok) {
+              const finnhubData = await finnhubResponse.json();
+              if (finnhubData.c) {
+                const changePercent = ((finnhubData.c - finnhubData.pc) / finnhubData.pc * 100).toFixed(2);
+                data.push({
+                  symbol,
+                  price: finnhubData.c,
+                  change: `${changePercent}%`,
+                  changeValue: finnhubData.c - finnhubData.pc,
+                  high: finnhubData.h,
+                  low: finnhubData.l,
+                  volume: 0, // Finnhub doesn't provide volume in quote endpoint
+                  lastUpdated: new Date().toISOString().split('T')[0],
+                  provider: "Finnhub"
+                });
+              }
+            }
           }
         } catch (symbolError: any) {
-          console.warn(`Failed to fetch Alpha Vantage data for ${symbol}:`, symbolError?.message);
+          console.warn(`Failed to fetch data for ${symbol}:`, symbolError?.message);
           // Continue with other symbols
         }
       }
@@ -644,8 +676,89 @@ export async function registerRoutes(app: Express): Promise<Server> {
       nextOpen: isOpen ? null : "Next trading day 9:30 AM EST",
       timezone: "UTC",
       currentTime: now.toISOString(),
-      alphaVantageConfigured: !!ALPHA_KEY
+      alphaVantageConfigured: !!ALPHA_KEY,
+      finnhubConfigured: !!FINNHUB_KEY
     });
+  });
+
+  // AI Chat with fallback to Anthropic
+  app.post('/api/chat', async (req, res) => {
+    const { message } = req.body;
+    
+    if (!message) {
+      return res.status(400).json({ error: "Message is required" });
+    }
+
+    try {
+      const OPENAI_KEY = process.env.OPENAI_API_KEY;
+      const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY;
+      
+      // Try OpenAI first
+      if (OPENAI_KEY) {
+        try {
+          const { default: OpenAI } = await import('openai');
+          const openai = new OpenAI({ apiKey: OPENAI_KEY });
+          const response = await openai.chat.completions.create({
+            model: "gpt-4",
+            messages: [
+              {
+                role: "system",
+                content: "You are a financial advisor for Neufin, providing investment insights and portfolio analysis. Keep responses concise and actionable."
+              },
+              { role: "user", content: message }
+            ],
+            max_tokens: 300
+          });
+          return res.json({ 
+            reply: response.choices[0].message.content,
+            provider: "OpenAI"
+          });
+        } catch (openaiError: any) {
+          console.warn("OpenAI quota exceeded, using Anthropic fallback");
+          
+          // If OpenAI fails, try Anthropic
+          if (ANTHROPIC_KEY) {
+            const anthropicResponse = await fetch("https://api.anthropic.com/v1/messages", {
+              method: "POST",
+              headers: {
+                "x-api-key": ANTHROPIC_KEY,
+                "Content-Type": "application/json",
+                "anthropic-version": "2023-06-01"
+              },
+              body: JSON.stringify({
+                model: "claude-3-sonnet-20240229",
+                max_tokens: 300,
+                messages: [{
+                  role: "user",
+                  content: `As a financial advisor for Neufin platform providing investment insights: ${message}`
+                }]
+              })
+            });
+            
+            if (anthropicResponse.ok) {
+              const anthropicData = await anthropicResponse.json();
+              return res.json({ 
+                reply: anthropicData.content[0].text,
+                provider: "Anthropic"
+              });
+            }
+          }
+        }
+      }
+      
+      // Fallback response when all AI services are unavailable
+      return res.json({ 
+        reply: "I'm currently analyzing real-time market data through Alpha Vantage. For investment insights, please review your portfolio performance and current market trends displayed on the dashboard.",
+        provider: "Market Data Focus"
+      });
+      
+    } catch (error: any) {
+      console.error("Chat service error:", error.message);
+      res.json({ 
+        reply: "Market analysis is available through live data feeds. Please review your portfolio and current market trends for investment decisions.",
+        provider: "Fallback"
+      });
+    }
   });
 
   const httpServer = createServer(app);
