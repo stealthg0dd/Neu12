@@ -116,7 +116,7 @@ export default function Watchlist() {
     <Card className="border border-gray-300">
       <CardContent className="p-6">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold text-foreground">Watchlist</h3>
+          <h3 className="text-lg font-semibold text-gray-800">Watchlist</h3>
           <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
             <DialogTrigger asChild>
               <Button 
@@ -228,14 +228,14 @@ export default function Watchlist() {
                     <span className="text-sm font-bold text-primary">{item.symbol}</span>
                   </div>
                   <div>
-                    <p className="font-medium text-foreground">{item.companyName}</p>
+                    <p className="font-medium text-gray-800">{item.companyName}</p>
                     <p className="text-sm text-muted-foreground">{item.sector}</p>
                   </div>
                 </div>
                 
                 <div className="flex items-center space-x-4">
                   <div className="text-right">
-                    <p className="font-mono font-medium text-foreground">
+                    <p className="font-mono font-medium text-gray-800">
                       ${item.currentPrice.toFixed(2)}
                     </p>
                     <p className={`text-sm ${item.changePercent >= 0 ? 'text-accent' : 'text-destructive'}`}>

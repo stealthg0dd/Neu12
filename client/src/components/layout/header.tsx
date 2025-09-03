@@ -30,7 +30,7 @@ export default function Header() {
     <header className="bg-card border-b border border-gray-300 px-6 py-4">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-foreground">Dashboard</h2>
+          <h2 className="text-2xl font-bold text-gray-800">Dashboard</h2>
           <p className="text-sm text-muted-foreground">
             Real-time market intelligence and portfolio insights
           </p>
@@ -63,7 +63,7 @@ export default function Header() {
           <Button
             variant="ghost"
             size="icon"
-            className="relative text-muted-foreground hover:text-foreground"
+            className="relative text-muted-foreground hover:text-gray-800"
             data-testid="button-notifications"
           >
             <Bell className="w-5 h-5" />

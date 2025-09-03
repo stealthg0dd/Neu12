@@ -62,7 +62,7 @@ export default function PortfolioOverview() {
             <h3 className="text-sm font-medium text-muted-foreground">Portfolio Value</h3>
             <TrendingUp className="w-4 h-4 text-accent" />
           </div>
-          <p className="text-2xl font-bold text-foreground mb-1" data-testid="text-portfolio-value">
+          <p className="text-2xl font-bold text-gray-800 mb-1" data-testid="text-portfolio-value">
             ${totalValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </p>
           <div className="flex items-center space-x-2">
@@ -83,7 +83,7 @@ export default function PortfolioOverview() {
             <h3 className="text-sm font-medium text-muted-foreground">Today's P&L</h3>
             <DollarSign className="w-4 h-4 text-accent" />
           </div>
-          <p className="text-2xl font-bold text-foreground mb-1" data-testid="text-daily-pnl">
+          <p className="text-2xl font-bold text-gray-800 mb-1" data-testid="text-daily-pnl">
             +${todaysPnL.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </p>
           <div className="flex items-center space-x-2">
@@ -115,7 +115,7 @@ export default function PortfolioOverview() {
             <h3 className="text-sm font-medium text-muted-foreground">Market Sentiment</h3>
             <Thermometer className="w-4 h-4 text-primary" />
           </div>
-          <p className="text-2xl font-bold text-foreground mb-1" data-testid="text-market-sentiment">
+          <p className="text-2xl font-bold text-gray-800 mb-1" data-testid="text-market-sentiment">
             {marketSentiment?.sentiment || "Neutral"}
           </p>
           <div className="flex items-center space-x-2">

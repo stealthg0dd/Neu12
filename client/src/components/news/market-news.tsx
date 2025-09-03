@@ -75,7 +75,7 @@ export default function MarketNews() {
       <Card className="border border-gray-300">
         <CardContent className="p-6">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-semibold text-foreground">Market News & Sentiment</h3>
+            <h3 className="text-lg font-semibold text-gray-800">Market News & Sentiment</h3>
           </div>
           <div className="text-center py-8">
             <p className="text-destructive mb-2">Failed to load market news</p>
@@ -92,10 +92,10 @@ export default function MarketNews() {
     <Card className="border border-gray-300">
       <CardContent className="p-6">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold text-foreground">Market News & Sentiment</h3>
+          <h3 className="text-lg font-semibold text-gray-800">Market News & Sentiment</h3>
           <div className="flex items-center space-x-2">
             <span className="text-xs text-muted-foreground">Last updated:</span>
-            <span className="text-xs font-medium text-foreground" data-testid="text-last-updated">
+            <span className="text-xs font-medium text-gray-800" data-testid="text-last-updated">
               {isLoading ? "Loading..." : "2 minutes ago"}
             </span>
           </div>
@@ -161,7 +161,7 @@ export default function MarketNews() {
                   </div>
                 </div>
                 
-                <h4 className="font-medium text-foreground text-sm mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                <h4 className="font-medium text-gray-800 text-sm mb-2 line-clamp-2 group-hover:text-primary transition-colors">
                   {article.headline}
                 </h4>
                 

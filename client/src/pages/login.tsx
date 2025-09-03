@@ -104,7 +104,7 @@ export default function Login() {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-2xl mb-4">
             <TrendingUp className="w-8 h-8 text-primary-foreground" />
           </div>
-          <h1 className="text-3xl font-bold text-foreground">Neufin</h1>
+          <h1 className="text-3xl font-bold text-gray-800">Neufin</h1>
           <p className="text-muted-foreground">Sentiment-Driven Market Intelligence</p>
         </div>
 
@@ -257,7 +257,7 @@ export default function Login() {
               <Button
                 variant="ghost"
                 onClick={() => setIsSignup(!isSignup)}
-                className="text-sm text-muted-foreground hover:text-foreground"
+                className="text-sm text-muted-foreground hover:text-gray-800"
                 data-testid="button-toggle-auth"
               >
                 {isSignup 

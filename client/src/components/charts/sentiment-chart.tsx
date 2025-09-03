@@ -24,7 +24,7 @@ export default function SentimentChart() {
     <Card className="border border-gray-300">
       <CardContent className="p-6">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold text-foreground">Sentiment Trends</h3>
+          <h3 className="text-lg font-semibold text-gray-800">Sentiment Trends</h3>
           <div className="flex items-center space-x-4 text-xs">
             <div className="flex items-center space-x-2">
               <div className="w-3 h-3 bg-accent rounded-full"></div>

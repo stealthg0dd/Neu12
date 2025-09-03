@@ -122,7 +122,7 @@ export default function AlphaSignals() {
     <Card className="border border-gray-300">
       <CardContent className="p-6">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold text-foreground">Top Alpha Signals</h3>
+          <h3 className="text-lg font-semibold text-gray-800">Top Alpha Signals</h3>
           <Badge variant="secondary" className="text-xs">
             Live Updates
           </Badge>
@@ -170,7 +170,7 @@ export default function AlphaSignals() {
                       </span>
                     </div>
                     <div>
-                      <p className="font-medium text-foreground">{signal.symbol}</p>
+                      <p className="font-medium text-gray-800">{signal.symbol}</p>
                       <p className="text-sm text-muted-foreground">{company?.name || 'Unknown Company'}</p>
                       <div className="flex items-center space-x-2 mt-1">
                         <Badge variant="secondary" className="text-xs">
@@ -183,7 +183,7 @@ export default function AlphaSignals() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="font-mono font-medium text-foreground">
+                    <p className="font-mono font-medium text-gray-800">
                       ${company?.price.toFixed(2) || '0.00'}
                     </p>
                     <p className={`text-sm ${(company?.change || 0) >= 0 ? 'text-accent' : 'text-destructive'}`}>
