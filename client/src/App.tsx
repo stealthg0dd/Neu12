@@ -14,10 +14,10 @@ function Router() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: "hsl(240, 10%, 8%)", color: "hsl(0, 0%, 100%)" }}>
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-          <p style={{ color: "hsl(0, 0%, 75%)" }}>Loading...</p>
+          <p className="text-muted-foreground">Loading...</p>
         </div>
       </div>
     );

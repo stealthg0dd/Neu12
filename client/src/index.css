@@ -1,101 +1,143 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* AGGRESSIVE DARK THEME ENFORCEMENT */
-html {
-  background: hsl(240, 10%, 8%) !important;
-  color: hsl(0, 0%, 100%) !important;
+:root {
+  --color-primary: hsl(220, 90%, 70%);
+  --color-secondary: hsl(340, 82%, 65%);
+  --color-background: hsl(240, 10%, 8%);
+  --color-surface: hsl(240, 8%, 12%);
+  --color-accent: hsl(48, 100%, 75%);
+  --color-border: hsl(240, 10%, 25%);
+  --color-text: hsl(0, 0%, 95%);
+  --color-text-muted: hsl(0, 0%, 75%);
+  --color-text-heading: hsl(0, 0%, 98%);
 }
 
-html.dark {
-  background: hsl(240, 10%, 8%) !important;
-  color: hsl(0, 0%, 100%) !important;
+@layer base {
+  body {
+    @apply bg-background text-text;
+    background-color: hsl(240, 10%, 8%) !important;
+    color: hsl(0, 0%, 100%) !important;
+  }
+  
+  html {
+    background-color: hsl(240, 10%, 8%) !important;
+    color: hsl(0, 0%, 100%) !important;
+  }
+  
+  #root {
+    background-color: hsl(240, 10%, 8%) !important;
+    color: hsl(0, 0%, 100%) !important;
+    min-height: 100vh;
+  }
 }
 
-html[data-theme="dark"] {
-  background: hsl(240, 10%, 8%) !important;
-  color: hsl(0, 0%, 100%) !important;
+/* Override Tailwind utilities with theme colors */
+.bg-background {
+  background-color: var(--color-background) !important;
 }
 
-body {
-  background: hsl(240, 10%, 8%) !important;
-  color: hsl(0, 0%, 100%) !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  min-height: 100vh !important;
+.bg-surface {
+  background-color: var(--color-surface) !important;
 }
 
-body.dark {
-  background: hsl(240, 10%, 8%) !important;
-  color: hsl(0, 0%, 100%) !important;
+.text-text {
+  color: var(--color-text) !important;
 }
 
-body[data-theme="dark"] {
-  background: hsl(240, 10%, 8%) !important;
-  color: hsl(0, 0%, 100%) !important;
+.border-border {
+  border-color: var(--color-border) !important;
 }
 
-#root {
-  background: hsl(240, 10%, 8%) !important;
-  color: hsl(0, 0%, 100%) !important;
-  min-height: 100vh !important;
-}
-
-/* Override ALL potential white backgrounds */
-.bg-white,
-.bg-gray-50,
-.bg-gray-100,
-.bg-slate-50,
-.bg-neutral-50,
-.bg-stone-50,
-.bg-zinc-50 {
-  background-color: hsl(240, 8%, 12%) !important;
-}
-
-/* Override ALL potential dark text */
-.text-black,
-.text-gray-900,
-.text-gray-800,
-.text-slate-900,
-.text-neutral-900,
-.text-stone-900,
-.text-zinc-900 {
-  color: hsl(0, 0%, 98%) !important;
-}
-
-/* Headings */
-h1, h2, h3, h4, h5, h6 {
-  color: hsl(0, 0%, 98%) !important;
+/* Enhanced text visibility classes */
+h1, h2, h3, h4, h5, h6, .text-xl, .text-2xl, .text-3xl, .text-4xl {
+  color: var(--color-text-heading) !important;
   font-weight: 600 !important;
 }
 
-/* Muted text */
-.text-muted-foreground,
-.text-gray-500,
+.text-muted-foreground, .text-gray-500, .text-gray-600 {
+  color: var(--color-text-muted) !important;
+}
+
+.text-foreground, .text-gray-900, .text-gray-800 {
+  color: var(--color-text) !important;
+}
+
+/* Force dark backgrounds on common white elements */
+.bg-surface {
+  background-color: var(--color-surface) !important;
+}
+
+.bg-background {
+  background-color: var(--color-background) !important;
+}
+
+.text-black {
+  color: var(--color-text) !important;
+}
+
+.text-gray-900 {
+  color: var(--color-text) !important;
+}
+
+/* Enhanced text visibility for better readability */
+.text-gray-700 {
+  color: var(--color-text) !important;
+}
+
 .text-gray-600 {
-  color: hsl(0, 0%, 75%) !important;
+  color: var(--color-text-muted) !important;
 }
 
-/* Universal dark override */
-* {
-  box-sizing: border-box;
+.text-gray-500 {
+  color: var(--color-text-muted) !important;
 }
 
-/* Scrollbar */
+/* Logo and brand text enhancement */
+.logo-text, [data-testid*="logo"], [class*="logo"] {
+  color: var(--color-text-heading) !important;
+  font-weight: 700 !important;
+}
+
+/* Dashboard title and headings */
+.dashboard-title, .page-title {
+  color: var(--color-text-heading) !important;
+  font-weight: 600 !important;
+}
+
+/* Card and component text visibility */
+.card-title, .card-header {
+  color: var(--color-text-heading) !important;
+}
+
+.card-content, .card-description {
+  color: var(--color-text) !important;
+}
+
+/* Navigation and button text */
+nav, .nav-item, .nav-link {
+  color: var(--color-text) !important;
+}
+
+button {
+  color: var(--color-text-heading) !important;
+}
+
+/* Custom scrollbar for dark theme */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(240, 8%, 12%);
+  background: var(--color-surface);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(240, 10%, 20%);
+  background: var(--color-border);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(48, 100%, 67%);
+  background: var(--color-primary);
 }
