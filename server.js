@@ -8,8 +8,8 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// Serve frontend from client/dist (not dist/client/dist)
-const clientBuildPath = path.join(__dirname, "client", "dist");
+// Serve frontend from client/dist
+const clientBuildPath = path.resolve(__dirname, "../client/dist");
 app.use(express.static(clientBuildPath));
 
 // API routes
