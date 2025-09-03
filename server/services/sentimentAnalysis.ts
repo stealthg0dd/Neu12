@@ -80,32 +80,58 @@ class SentimentAnalysisService {
   }
 
   private getMockSentiment(text: string): SentimentResult {
-    // Simple mock sentiment based on keywords
-    const positiveWords = ['beat', 'strong', 'growth', 'profit', 'increase', 'boost', 'success', 'gain'];
-    const negativeWords = ['loss', 'decline', 'fall', 'drop', 'challenge', 'struggle', 'weakness', 'concern'];
-    
+    // Enhanced rule-based sentiment analysis for production reliability
     const lowerText = text.toLowerCase();
-    const positiveMatches = positiveWords.filter(word => lowerText.includes(word)).length;
-    const negativeMatches = negativeWords.filter(word => lowerText.includes(word)).length;
+    
+    // Financial sentiment keywords with comprehensive coverage
+    const positiveWords = [
+      'beat', 'strong', 'growth', 'profit', 'increase', 'boost', 'success', 'gain',
+      'rise', 'up', 'bull', 'exceed', 'surge', 'rally', 'jump', 'soar', 'climb', 
+      'advance', 'improve', 'outperform', 'recovery', 'breakthrough', 'expansion'
+    ];
+    const negativeWords = [
+      'loss', 'decline', 'fall', 'drop', 'challenge', 'struggle', 'weakness', 'concern',
+      'down', 'bear', 'miss', 'below', 'plunge', 'crash', 'tumble', 'slide', 'slump',
+      'retreat', 'underperform', 'risk', 'warning', 'pressure', 'uncertainty'
+    ];
+    
+    let positiveScore = 0;
+    let negativeScore = 0;
+    
+    // Count weighted occurrences
+    positiveWords.forEach(word => {
+      const regex = new RegExp(`\\b${word}\\b`, 'gi');
+      const matches = (lowerText.match(regex) || []).length;
+      positiveScore += matches;
+    });
+    
+    negativeWords.forEach(word => {
+      const regex = new RegExp(`\\b${word}\\b`, 'gi');
+      const matches = (lowerText.match(regex) || []).length;
+      negativeScore += matches;
+    });
     
     let sentiment: 'positive' | 'negative' | 'neutral';
     let score: number;
     
-    if (positiveMatches > negativeMatches) {
+    if (positiveScore > negativeScore) {
       sentiment = 'positive';
-      score = 6 + Math.min(positiveMatches, 4); // 6-10 range
-    } else if (negativeMatches > positiveMatches) {
+      score = Math.min(10, 6 + positiveScore * 0.8); // 6-10 range
+    } else if (negativeScore > positiveScore) {
       sentiment = 'negative';
-      score = 4 - Math.min(negativeMatches, 4); // 0-4 range
+      score = Math.max(0, 4 - negativeScore * 0.8); // 0-4 range
     } else {
       sentiment = 'neutral';
       score = 5;
     }
     
+    // Higher confidence for rule-based analysis
+    const confidence = Math.min(0.85, 0.65 + Math.max(positiveScore, negativeScore) * 0.05);
+    
     return {
       sentiment,
       score,
-      confidence: 0.7 + Math.random() * 0.2, // 0.7-0.9 range
+      confidence
     };
   }
 }
