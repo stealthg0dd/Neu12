@@ -1,8 +1,24 @@
-# Neufin Deployment Guide
+# Neufin Production Deployment Guide
 
-## ✅ Production-Ready Status
+## ✅ Production-Ready Structure
 
-Your Neufin platform is fully configured and ready for Render deployment. All components have been tested and optimized.
+Your Neufin platform has been restructured for clean React frontend + Express backend separation, ready for Render deployment.
+
+## Project Structure
+
+```
+/
+├── client/                    # React frontend (Vite)
+│   ├── src/                  # React components and pages
+│   ├── dist/                 # Build output (after npm run build)
+│   ├── package.json          # Frontend dependencies
+│   └── vite.config.ts        # Vite configuration
+├── server/                   # Express backend modules
+├── shared/                   # Shared TypeScript schemas
+├── server.js                 # Main Express server entry point
+├── package.json              # Backend dependencies and scripts
+└── render.yaml               # Render deployment configuration
+```
 
 ## Deployment Steps
 
@@ -15,8 +31,8 @@ Your Neufin platform is fully configured and ready for Render deployment. All co
    - Render will automatically detect the `render.yaml` configuration
 
 3. **Automatic Configuration**:
-   - Build Command: `npm ci && npm run build && npx esbuild server/production.ts --platform=node --packages=external --bundle --format=esm --outfile=dist/production.js`
-   - Start Command: `node dist/production.js`
+   - Build Command: `npm ci && npm run build`
+   - Start Command: `npm start` (runs `node server.js`)
    - Health Check: `/api/health`
    - Port: Auto-detected from environment
 
@@ -41,10 +57,10 @@ Your Neufin platform is fully configured and ready for Render deployment. All co
 ## Verified Components
 
 ### ✅ Build System
-- Frontend builds successfully with Vite
-- Backend bundles correctly with ESBuild
-- Production server runs without vite dependencies
-- Static assets served properly
+- React frontend builds successfully (938KB optimized bundle)
+- Express backend serves static files from client/dist
+- Production server.js runs without vite dependencies
+- Clean separation of frontend and backend concerns
 
 ### ✅ API Endpoints
 - Health check: `/api/health` responds correctly
@@ -52,11 +68,13 @@ Your Neufin platform is fully configured and ready for Render deployment. All co
 - Portfolio management APIs ready
 - Market data integration working
 - AI analysis services operational
+- OpenAI GPT-5 integration working
 
 ### ✅ Database Integration
 - Drizzle ORM configured for PostgreSQL
 - Schema migrations handled automatically
 - Connection pooling optimized for production
+- Behavioral analysis data tracking
 
 ### ✅ Security & Performance
 - JWT authentication secured
@@ -64,15 +82,18 @@ Your Neufin platform is fully configured and ready for Render deployment. All co
 - Request logging implemented
 - Error handling comprehensive
 - Static file serving optimized
+- API rate limiting for external services
 
 ## Production Features
 
-- **AI-Powered Chat Assistant**: Personalized investment advice
-- **Behavioral Bias Analysis**: Detect and improve trading patterns  
-- **Market Trend Analysis**: Real-time bullish/bearish recommendations
-- **Portfolio Management**: Multi-asset tracking and analysis
-- **Sentiment Analysis**: AI-powered news sentiment scoring
-- **Real-Time Data**: Yahoo Finance and Alpha Vantage integration
+- **AI-Powered Chat Assistant**: Personalized investment advice using GPT-5
+- **Behavioral Bias Analysis**: ML-based detection of 5 cognitive biases
+- **Market Trend Analysis**: Real-time bullish/bearish recommendations with confidence scoring
+- **Portfolio Management**: Multi-asset tracking (stocks, ETFs, crypto, commodities, forex)
+- **Sentiment Analysis**: AI-powered news sentiment scoring with caching
+- **Real-Time Data**: Yahoo Finance and Alpha Vantage integration with fallback
+- **Advanced Analytics**: Risk assessment and behavioral profiling
+- **Modern UI**: Dark-themed responsive design with comprehensive navigation
 
 ## Post-Deployment
 

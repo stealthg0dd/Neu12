@@ -11,6 +11,8 @@ Neufin is a retail investor platform that provides real-time sentiment-driven ma
 - ✅ Added dedicated behavioral analysis page with detailed insights and improvement recommendations
 - ✅ Enhanced UI with progress indicators, badges, and alert components for better user experience
 - ✅ Integrated advanced analytics dashboard with risk assessment and behavioral profiling
+- ✅ Restructured project for production deployment: separated React frontend (/client) and Express backend (/server.js)
+- ✅ Updated Render deployment configuration for clean frontend/backend separation
 
 # User Preferences
 

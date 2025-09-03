@@ -3,8 +3,8 @@ services:
     name: neufin
     runtime: node
     plan: free
-    buildCommand: npm ci && npm run build && npx esbuild server/production.ts --platform=node --packages=external --bundle --format=esm --outfile=dist/production.js
-    startCommand: node dist/production.js
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
     healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV

@@ -22,4 +22,4 @@ RUN npm prune --production
 EXPOSE 5000
 
 # Start the application
-CMD ["npm", "start"]
+CMD ["node", "server.js"]
