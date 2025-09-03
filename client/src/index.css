@@ -87,10 +87,45 @@
 }
 
 /* Custom overrides for Neufin dark theme */
+html {
+  background-color: hsl(var(--background));
+}
+
 body {
   font-family: var(--font-sans);
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
+}
+
+/* Force dark theme globally */
+html.dark,
+html[data-theme="dark"],
+html {
+  background-color: hsl(220 30% 6%) !important;
+  color: hsl(220 10% 90%) !important;
+}
+
+body.dark,
+body[data-theme="dark"],
+body {
+  background-color: hsl(220 30% 6%) !important;
+  color: hsl(220 10% 90%) !important;
+}
+
+/* Override any white backgrounds */
+#root {
+  background-color: hsl(220 30% 6%) !important;
+  color: hsl(220 10% 90%) !important;
+  min-height: 100vh;
+}
+
+/* Ensure all main containers use dark theme */
+.bg-white {
+  background-color: hsl(220 25% 11%) !important;
+}
+
+.text-black {
+  color: hsl(220 10% 90%) !important;
 }
 
 .dark {
