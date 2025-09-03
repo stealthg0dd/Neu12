@@ -1,33 +1,21 @@
 module.exports = {
-  darkMode: "class",
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}"
   ],
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
-        primary: "var(--color-primary)",
-        secondary: "var(--color-secondary)",
-        background: "var(--color-background)",
-        surface: "var(--color-surface)",
-        accent: "var(--color-accent)",
-        border: "var(--color-border)",
-        text: "var(--color-text)",
-        "text-muted": "var(--color-text-muted)",
-        "text-heading": "var(--color-text-heading)"
+        background: "hsl(240, 10%, 8%)",
+        surface: "hsl(240, 8%, 12%)",
+        foreground: "hsl(0, 0%, 100%)",
+        accent: "hsl(48, 100%, 67%)",
+        border: "hsl(240, 10%, 20%)",
+        primary: "hsl(220, 90%, 56%)",
+        secondary: "hsl(340, 82%, 52%)",
       },
-      backgroundColor: {
-        background: "var(--color-background)",
-        surface: "var(--color-surface)"
-      },
-      textColor: {
-        text: "var(--color-text)"
-      },
-      borderColor: {
-        border: "var(--color-border)"
-      }
     },
   },
   plugins: [],
-}
+};
