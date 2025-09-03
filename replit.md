@@ -2,14 +2,15 @@
 
 Neufin is a retail investor platform that provides real-time sentiment-driven market intelligence. This is a full-stack web application designed to help retail investors make informed decisions by combining stock market data with sentiment analysis and proprietary alpha scoring algorithms. The platform features a modern dark-themed dashboard with functional navigation tabs, comprehensive portfolio management, manual data population capabilities, and real-time market data integration across multiple asset types (stocks, ETFs, crypto, commodities, forex).
 
-## Recent Changes (January 2025)
-- ✅ Fixed navigation tabs - all sidebar links now properly switch between views
-- ✅ Resolved JWT authentication issues - tokens properly included in API requests  
-- ✅ Added logout functionality with user dropdown menu in header
-- ✅ Created comprehensive portfolio management with manual population
-- ✅ Added sample data feature for testing alpha signals and market intelligence
-- ✅ Enhanced multi-asset support with tabbed input forms
-- ✅ Integrated real-time market data services (Yahoo Finance/Alpha Vantage)
+## Recent Changes (September 2025)
+- ✅ Fixed OpenAI API compatibility issues (max_tokens → max_completion_tokens, removed temperature parameter)
+- ✅ Added AI-powered chat widget for personalized investment advice and portfolio analysis
+- ✅ Created market trend analysis widget with real-time bullish/bearish sentiment recommendations
+- ✅ Built comprehensive behavioral bias analyzer with ML-based detection algorithms
+- ✅ Implemented bias detection for Loss Aversion, Overconfidence, Anchoring, Herding, and Confirmation Bias
+- ✅ Added dedicated behavioral analysis page with detailed insights and improvement recommendations
+- ✅ Enhanced UI with progress indicators, badges, and alert components for better user experience
+- ✅ Integrated advanced analytics dashboard with risk assessment and behavioral profiling
 
 # User Preferences
 
@@ -27,14 +28,17 @@ The backend is built with Express.js running on Node.js with TypeScript for type
 
 Key services include:
 - Stock API service for real-time market data integration
-- Sentiment analysis service using OpenAI API for news sentiment scoring
+- Sentiment analysis service using OpenAI GPT-5 for news sentiment scoring
 - Alpha signature service that combines sentiment, volatility, and momentum into proprietary scoring algorithms
+- Behavioral bias analyzer with rule-based and ML algorithms for detecting cognitive biases
+- AI chat analysis service for personalized investment advice and portfolio insights
+- Market trend analysis service providing bullish/bearish recommendations with confidence scoring
 - Authentication middleware using JWT tokens for secure user sessions
 
 ## Data Storage Solutions
-The application uses PostgreSQL as the primary database with Drizzle ORM for type-safe database operations. The database schema includes tables for users, portfolio holdings, watchlist items, sentiment data, alpha signatures, and stock prices. Neon is used as the PostgreSQL provider for serverless database hosting.
+The application uses PostgreSQL as the primary database with Drizzle ORM for type-safe database operations. The database schema includes tables for users, portfolio holdings, watchlist items, sentiment data, alpha signatures, stock prices, and behavioral analysis data. Neon is used as the PostgreSQL provider for serverless database hosting.
 
-Database relationships are properly defined with foreign key constraints and cascading deletes. The schema uses UUIDs for primary keys and includes proper indexing for performance optimization.
+Database relationships are properly defined with foreign key constraints and cascading deletes. The schema uses UUIDs for primary keys and includes proper indexing for performance optimization. Behavioral analysis data includes transaction history tracking for bias detection algorithms.
 
 ## Authentication and Authorization
 JWT-based authentication system handles user registration and login. Passwords are hashed using bcryptjs with salt rounds for security. The authentication middleware validates JWT tokens on protected routes and attaches user context to requests. Tokens are stored in localStorage on the client side with automatic inclusion in API requests.

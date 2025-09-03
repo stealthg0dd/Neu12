@@ -130,7 +130,6 @@ Respond with JSON in this exact format:
       ],
       response_format: { type: "json_object" },
       max_completion_tokens: 800,
-      temperature: 0.7,
     });
 
     const result = JSON.parse(completion.choices[0].message.content || '{}');

@@ -6,6 +6,7 @@ import { sentimentAnalysis } from "./services/sentimentAnalysis";
 import { alphaSignature } from "./services/alphaSignature";
 import { analyzeChatMessage, validateChatInput } from "./services/chatAnalysis";
 import { getCachedMarketTrendAnalysis, refreshMarketTrendAnalysis } from "./services/marketTrendAnalysis";
+import { behavioralBiasAnalyzer } from "./services/behavioralBiasAnalyzer";
 import { authenticateToken, generateToken, hashPassword, comparePassword, type AuthRequest } from "./middleware/auth";
 import { insertUserSchema, insertPortfolioHoldingSchema, insertWatchlistSchema } from "@shared/schema";
 import { z } from "zod";
@@ -470,6 +471,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Market trend analysis refresh error:', error);
       res.status(500).json({ message: 'Failed to refresh market trend analysis' });
+    }
+  });
+
+  // Behavioral Bias Analysis Routes
+  app.get('/api/behavioral-analysis', authenticateToken, async (req: AuthRequest, res) => {
+    try {
+      const analysis = await behavioralBiasAnalyzer.analyzeBehavioralBiases(req.user!.id);
+      res.json(analysis);
+    } catch (error) {
+      console.error('Behavioral analysis error:', error);
+      res.status(500).json({ message: 'Failed to generate behavioral analysis' });
+    }
+  });
+
+  app.post('/api/behavioral-analysis/refresh', authenticateToken, async (req: AuthRequest, res) => {
+    try {
+      const analysis = await behavioralBiasAnalyzer.analyzeBehavioralBiases(req.user!.id);
+      res.json(analysis);
+    } catch (error) {
+      console.error('Behavioral analysis refresh error:', error);
+      res.status(500).json({ message: 'Failed to refresh behavioral analysis' });
     }
   });
 

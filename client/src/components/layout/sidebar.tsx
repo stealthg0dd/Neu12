@@ -1,4 +1,4 @@
-import { TrendingUp, LayoutDashboard, Briefcase, Heart, Newspaper, Activity, Target, MoreHorizontal } from "lucide-react";
+import { TrendingUp, LayoutDashboard, Briefcase, Heart, Newspaper, Activity, Target, Brain, MoreHorizontal } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 
 const navigationItems = [
@@ -8,6 +8,7 @@ const navigationItems = [
   { icon: Newspaper, label: "Market News", id: "market-news" },
   { icon: Activity, label: "Sentiment Tracker", id: "sentiment" },
   { icon: Target, label: "Alpha Signals", id: "alpha" },
+  { icon: Brain, label: "Behavioral Analysis", id: "behavioral-analysis" },
 ];
 
 interface SidebarProps {

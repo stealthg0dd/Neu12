@@ -11,6 +11,7 @@ import { AddHoldingForm } from "@/components/portfolio/add-holding-form";
 import PortfolioManagement from "@/components/portfolio/portfolio-management";
 import { AIChatWidget } from "@/components/chat/ai-chat-widget";
 import { MarketTrendWidget } from "@/components/analysis/market-trend-widget";
+import BehavioralAnalysis from "@/pages/behavioral-analysis";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Plus } from "lucide-react";
@@ -41,6 +42,9 @@ export default function Dashboard() {
       
       case "alpha":
         return <AlphaSignals />;
+      
+      case "behavioral-analysis":
+        return <BehavioralAnalysis />;
       
       default: // dashboard
         return (
