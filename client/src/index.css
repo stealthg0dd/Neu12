@@ -2,26 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Force dark theme globally with highest priority */
-* {
-  box-sizing: border-box;
-}
-
-html,
-html.dark,
-html[data-theme="dark"] {
+/* Force global dark theme */
+html, body {
   background-color: hsl(240, 10%, 8%) !important;
   color: hsl(0, 0%, 100%) !important;
 }
 
-body,
-body.dark,
-body[data-theme="dark"] {
+body {
+  min-height: 100vh;
   background-color: hsl(240, 10%, 8%) !important;
   color: hsl(0, 0%, 100%) !important;
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
 }
 
 #root {
@@ -30,44 +20,22 @@ body[data-theme="dark"] {
   min-height: 100vh;
 }
 
-/* Override any Tailwind defaults that might cause white backgrounds */
-.bg-slate-50,
-.bg-gray-50,
-.bg-white {
-  background-color: hsl(240, 8%, 12%) !important;
-}
-
-.text-slate-900,
-.text-gray-900,
-.text-black {
-  color: hsl(0, 0%, 98%) !important;
-}
-
-/* Enhanced text visibility */
-h1, h2, h3, h4, h5, h6 {
-  color: hsl(0, 0%, 98%) !important;
-  font-weight: 600;
-}
-
-.text-muted-foreground {
-  color: hsl(0, 0%, 75%) !important;
-}
-
-.text-gray-500, .text-gray-600 {
-  color: hsl(0, 0%, 75%) !important;
-}
-
-.text-black, .text-gray-900 {
-  color: hsl(0, 0%, 98%) !important;
-}
-
-/* Override light backgrounds */
+/* Override any white backgrounds */
 .bg-white {
   background-color: hsl(240, 8%, 12%) !important;
 }
 
 .bg-gray-50 {
   background-color: hsl(240, 10%, 8%) !important;
+}
+
+/* Text visibility */
+h1, h2, h3, h4, h5, h6 {
+  color: hsl(0, 0%, 98%) !important;
+}
+
+.text-muted-foreground {
+  color: hsl(0, 0%, 75%) !important;
 }
 
 ::-webkit-scrollbar {
