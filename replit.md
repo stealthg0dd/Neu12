@@ -3,6 +3,7 @@
 Neufin is a retail investor platform that provides real-time sentiment-driven market intelligence. This is a full-stack web application designed to help retail investors make informed decisions by combining stock market data with sentiment analysis and proprietary alpha scoring algorithms. The platform features a modern dark-themed dashboard with functional navigation tabs, comprehensive portfolio management, manual data population capabilities, and real-time market data integration across multiple asset types (stocks, ETFs, crypto, commodities, forex).
 
 ## Recent Changes (September 2025)
+- ✅ **DYNAMIC USER-CONFIGURABLE TICKERS**: Users can now query any custom symbols via ?symbols=AAPL,TSLA,NFLX parameter
 - ✅ **ROBUST API FALLBACKS**: Added Anthropic Claude backup for AI chat when OpenAI quota exceeded
 - ✅ **FINNHUB MARKET BACKUP**: Implemented Finnhub API as fallback for Alpha Vantage market data
 - ✅ **REAL-TIME MARKET DATA**: Integrated Alpha Vantage API with live stock quotes and market trends

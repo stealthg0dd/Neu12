@@ -1,0 +1,138 @@
+# ==============================
+# Replit Prompt: Dynamic Live Data + Render Deployment Fix
+# ==============================
+
+echo "✅ Updating Neufin codebase for dynamic live market data..."
+
+# 1. Backend: dynamic environment keys with fallback
+cat > server/config/env.ts <<'EOL'
+import dotenv from "dotenv";
+dotenv.config();
+
+export const OPENAI_KEY = process.env.OPENAI_API_KEY;
+export const ALPHA_KEY = process.env.ALPHA_VANTAGE_KEY;
+export const FINNHUB_KEY = process.env.FINNHUB_API_KEY;
+export const DATABASE_URL = process.env.DATABASE_URL;
+export const SERVER_PORT = process.env.PORT || 5000;
+EOL
+
+# 2. Backend route: market trends with fallback & user-defined symbols
+cat > server/routes/market.ts <<'EOL'
+import express from "express";
+import axios from "axios";
+import { ALPHA_KEY, FINNHUB_KEY } from "../config/env.js";
+const router = express.Router();
+
+router.get("/trends", async (req, res) => {
+  const symbols = req.query.symbols?.split(",") || ["AAPL","TSLA","GOOG"];
+  const data = [];
+
+  try {
+    if(ALPHA_KEY){
+      for(const s of symbols){
+        const r = await axios.get("https://www.alphavantage.co/query", {
+          params:{ function:"GLOBAL_QUOTE", symbol:s, apikey:ALPHA_KEY }
+        });
+        const q = r.data["Global Quote"] || {};
+        data.push({ 
+          symbol: s, 
+          price: q["05. price"] || 0, 
+          change: q["10. change percent"] || "0%" 
+        });
+      }
+    } else if(FINNHUB_KEY){
+      for(const s of symbols){
+        const r = await axios.get(`https://finnhub.io/api/v1/quote`, {
+          params:{ symbol: s, token: FINNHUB_KEY }
+        });
+        const changePct = ((r.data.c - r.data.pc)/r.data.pc*100).toFixed(2) + "%";
+        data.push({ symbol: s, price: r.data.c || 0, change: changePct });
+      }
+    } else {
+      symbols.forEach(s => data.push({ symbol: s, price: 0, change: "0%" }));
+    }
+    res.json(data);
+  } catch(e){
+    console.error("Market API error:", e.message);
+    symbols.forEach(s => data.push({ symbol: s, price: 0, change: "0%" }));
+    res.json(data);
+  }
+});
+
+export default router;
+EOL
+
+# 3. Frontend: API service pointing to Render backend or localhost
+cat > client/src/services/api.ts <<'EOL'
+const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
+
+/**
+ * Fetch market trends
+ * @param symbols Array of ticker symbols
+ */
+export const fetchMarketTrends = async (symbols = ["AAPL","TSLA"]) => {
+  const url = `${API_BASE}/market/trends?symbols=${symbols.join(",")}`;
+  const res = await fetch(url);
+  if(!res.ok) throw new Error("Failed to fetch market trends");
+  return res.json();
+};
+EOL
+
+# 4. Frontend: Update App component to allow user-defined tickers and fetch live data
+cat > client/src/App.tsx <<'EOL'
+import React, { useEffect, useState } from "react";
+import { fetchMarketTrends } from "./services/api";
+
+function App() {
+  const [symbols, setSymbols] = useState(["AAPL","TSLA"]);
+  const [marketData, setMarketData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      const data = await fetchMarketTrends(symbols);
+      setMarketData(data);
+      setError("");
+    } catch(e) {
+      console.error(e);
+      setError("Failed to load market data");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => { loadData(); }, [symbols]);
+
+  return (
+    <div className="min-h-screen bg-dark text-white p-4">
+      <h1 className="text-3xl font-bold mb-4">Neufin Market Trends</h1>
+      <input 
+        type="text" 
+        placeholder="Add ticker symbols comma-separated" 
+        className="p-2 rounded text-black"
+        onBlur={(e) => setSymbols(e.target.value.split(",").map(s => s.trim().toUpperCase()))}
+      />
+      {loading && <p>Loading market data...</p>}
+      {error && <p className="text-red-500">{error}</p>}
+      <ul>
+        {marketData.map(m => (
+          <li key={m.symbol} className="mb-2">
+            {m.symbol}: ${m.price} ({m.change})
+          </li>
+        ))}
+      </ul>
+      <button onClick={loadData} className="mt-4 px-4 py-2 bg-blue-600 rounded">Refresh</button>
+    </div>
+  );
+}
+
+export default App;
+EOL
+
+# 5. Build frontend & backend
+rm -rf dist client/dist
+npm run build
+
+echo "✅ Replit prompt applied: Dynamic market data, user-defined tickers, Render deployment ready. Frontend points to deployed backend, fallback APIs in place."

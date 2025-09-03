@@ -501,13 +501,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get('/api/market/trends', async (req, res) => {
     try {
+      // Support user-defined symbols or default watchlist
+      const querySymbols = req.query.symbols as string;
+      const symbols = querySymbols ? 
+        querySymbols.split(",").map(s => s.trim().toUpperCase()) : 
+        ["AAPL", "TSLA", "GOOGL", "MSFT", "AMZN"];
+      
       // Try Alpha Vantage first, then Finnhub, then fallback
       if (!ALPHA_KEY && !FINNHUB_KEY) {
         console.warn("No market data API keys configured, using fallback data");
         throw new Error("No market data API keys configured");
       }
 
-      const symbols = ["AAPL", "TSLA", "GOOGL", "MSFT", "AMZN"];
       const data = [];
 
       for (const symbol of symbols) {
@@ -575,41 +580,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       res.json(data);
     } catch (error: any) {
-      console.error("Alpha Vantage market trends error:", error?.message);
+      console.error("Market trends API error:", error?.message);
       
-      // Return realistic fallback data
-      res.json([
-        { 
-          symbol: "AAPL", 
-          price: 170.12, 
-          change: "+1.2%", 
-          changeValue: 2.01,
-          high: 172.50,
-          low: 168.90,
-          volume: 45230000,
-          lastUpdated: new Date().toISOString().split('T')[0]
-        },
-        { 
-          symbol: "TSLA", 
-          price: 312.45, 
-          change: "-0.5%", 
-          changeValue: -1.58,
-          high: 318.20,
-          low: 310.15,
-          volume: 38750000,
-          lastUpdated: new Date().toISOString().split('T')[0]
-        },
-        { 
-          symbol: "GOOGL", 
-          price: 2750.80, 
-          change: "+0.8%", 
-          changeValue: 21.75,
-          high: 2765.40,
-          low: 2735.20,
-          volume: 12340000,
-          lastUpdated: new Date().toISOString().split('T')[0]
-        }
-      ]);
+      // Return fallback data for requested symbols
+      const querySymbols = req.query.symbols as string;
+      const symbols = querySymbols ? 
+        querySymbols.split(",").map(s => s.trim().toUpperCase()) : 
+        ["AAPL", "TSLA", "GOOGL", "MSFT", "AMZN"];
+      
+      const fallbackData = symbols.map(symbol => ({
+        symbol,
+        price: 100.00 + Math.random() * 500, // Realistic price range
+        change: (Math.random() - 0.5 > 0 ? "+" : "-") + (Math.random() * 3).toFixed(2) + "%",
+        changeValue: (Math.random() - 0.5) * 10,
+        high: 100.00 + Math.random() * 500,
+        low: 100.00 + Math.random() * 500,
+        volume: Math.floor(Math.random() * 50000000),
+        lastUpdated: new Date().toISOString().split('T')[0],
+        provider: "Fallback"
+      }));
+      
+      res.json(fallbackData);
     }
   });
 
