@@ -16,9 +16,26 @@ app.use(express.urlencoded({ extended: true }));
 const clientBuildPath = path.resolve(__dirname, "../client/dist");
 app.use(express.static(clientBuildPath));
 
+// Import market routes (will be compiled to .js)
+let marketRouter;
+try {
+  const marketModule = await import("./dist/server/routes/market.js");
+  marketRouter = marketModule.default;
+} catch (error) {
+  console.warn("Market routes not available:", error.message);
+}
+
+// API routes
+if (marketRouter) {
+  app.use("/api/market", marketRouter);
+}
+
 // Health check endpoint
 app.get("/api/health", (req, res) => {
-  res.json({ status: "ok" });
+  res.json({ 
+    status: "ok",
+    alphaVantageConfigured: !!process.env.ALPHA_VANTAGE_KEY
+  });
 });
 
 // Demo login endpoint for quick access
@@ -72,4 +89,5 @@ app.get("*", (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  console.log(`Alpha Vantage API: ${process.env.ALPHA_VANTAGE_KEY ? 'Configured' : 'Not configured'}`);
 });
