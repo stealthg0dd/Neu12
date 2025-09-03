@@ -119,7 +119,7 @@ export default function AlphaSignals() {
   };
 
   return (
-    <Card className="border-border">
+    <Card className="border border-gray-300">
       <CardContent className="p-6">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-lg font-semibold text-foreground">Top Alpha Signals</h3>
@@ -131,7 +131,7 @@ export default function AlphaSignals() {
         {isLoading ? (
           <div className="space-y-4">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="p-4 border border-border rounded-lg">
+              <div key={i} className="p-4 border border border-gray-300 rounded-lg">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
                     <div className="w-12 h-12 bg-muted rounded-full animate-pulse"></div>

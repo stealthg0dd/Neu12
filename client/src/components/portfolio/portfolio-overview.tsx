@@ -29,7 +29,7 @@ export default function PortfolioOverview() {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {[...Array(4)].map((_, i) => (
-          <Card key={i} className="border-border">
+          <Card key={i} className="border border-gray-300">
             <CardContent className="p-6">
               <Skeleton className="h-4 w-20 mb-4" />
               <Skeleton className="h-8 w-32 mb-2" />
@@ -56,7 +56,7 @@ export default function PortfolioOverview() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       {/* Portfolio Value */}
-      <Card className="border-border">
+      <Card className="border border-gray-300">
         <CardContent className="p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-medium text-muted-foreground">Portfolio Value</h3>
@@ -77,7 +77,7 @@ export default function PortfolioOverview() {
       </Card>
       
       {/* Today's P&L */}
-      <Card className="border-border">
+      <Card className="border border-gray-300">
         <CardContent className="p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-medium text-muted-foreground">Today's P&L</h3>
@@ -93,7 +93,7 @@ export default function PortfolioOverview() {
       </Card>
       
       {/* Alpha Score */}
-      <Card className="border-border">
+      <Card className="border border-gray-300">
         <CardContent className="p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-medium text-muted-foreground">Alpha Score</h3>
@@ -109,7 +109,7 @@ export default function PortfolioOverview() {
       </Card>
       
       {/* Market Sentiment */}
-      <Card className="border-border">
+      <Card className="border border-gray-300">
         <CardContent className="p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-medium text-muted-foreground">Market Sentiment</h3>

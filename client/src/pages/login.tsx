@@ -108,7 +108,7 @@ export default function Login() {
           <p className="text-muted-foreground">Sentiment-Driven Market Intelligence</p>
         </div>
 
-        <Card className="border-border shadow-lg">
+        <Card className="border border-gray-300 shadow-lg">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl">
               {isSignup ? "Create Account" : "Welcome Back"}

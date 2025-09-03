@@ -113,7 +113,7 @@ export default function Watchlist() {
   };
 
   return (
-    <Card className="border-border">
+    <Card className="border border-gray-300">
       <CardContent className="p-6">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-lg font-semibold text-foreground">Watchlist</h3>
@@ -157,7 +157,7 @@ export default function Watchlist() {
                         className={`p-3 border rounded-lg cursor-pointer transition-colors ${
                           selectedStock?.symbol === stock.symbol
                             ? 'border-primary bg-primary/5'
-                            : 'border-border hover:border-primary/50'
+                            : 'border border-gray-300 hover:border-primary/50'
                         }`}
                         onClick={() => setSelectedStock(stock)}
                         data-testid={`stock-option-${stock.symbol}`}
@@ -200,7 +200,7 @@ export default function Watchlist() {
         {isLoading ? (
           <div className="space-y-4">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="flex items-center justify-between py-3 border-b border-border">
+              <div key={i} className="flex items-center justify-between py-3 border-b border border-gray-300">
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-muted rounded-lg animate-pulse"></div>
                   <div className="space-y-2">
@@ -220,7 +220,7 @@ export default function Watchlist() {
             {watchlist.map((item) => (
               <div 
                 key={item.id} 
-                className="flex items-center justify-between py-3 border-b border-border last:border-b-0 group"
+                className="flex items-center justify-between py-3 border-b border border-gray-300 last:border-b-0 group"
                 data-testid={`watchlist-item-${item.symbol}`}
               >
                 <div className="flex items-center space-x-3">

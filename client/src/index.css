@@ -2,11 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  .border-border {
-    border-color: hsl(var(--border));
-  }
-}
+
 
 :root {
   --background: hsl(220, 30%, 6%);
@@ -81,7 +77,7 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border border-gray-300;
   }
 
   body {

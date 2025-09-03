@@ -72,7 +72,7 @@ export default function MarketNews() {
 
   if (error) {
     return (
-      <Card className="border-border">
+      <Card className="border border-gray-300">
         <CardContent className="p-6">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-lg font-semibold text-foreground">Market News & Sentiment</h3>
@@ -89,7 +89,7 @@ export default function MarketNews() {
   }
 
   return (
-    <Card className="border-border">
+    <Card className="border border-gray-300">
       <CardContent className="p-6">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-lg font-semibold text-foreground">Market News & Sentiment</h3>
@@ -104,7 +104,7 @@ export default function MarketNews() {
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="p-4 border border-border rounded-lg">
+              <div key={i} className="p-4 border border border-gray-300 rounded-lg">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center space-x-2">
                     <div className="w-3 h-3 bg-muted rounded-full animate-pulse"></div>
@@ -128,7 +128,7 @@ export default function MarketNews() {
             {news.map((article, index) => (
               <div 
                 key={index} 
-                className="p-4 border border-border rounded-lg hover:border-primary/50 transition-colors cursor-pointer group"
+                className="p-4 border border border-gray-300 rounded-lg hover:border-primary/50 transition-colors cursor-pointer group"
                 onClick={() => article.url && window.open(article.url, '_blank')}
                 data-testid={`news-article-${index}`}
               >
