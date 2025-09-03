@@ -80,7 +80,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
+    <div className="flex h-screen overflow-hidden bg-gray-50">
       <Sidebar activeView={activeView} onViewChange={setActiveView} />
       
       <main className="flex-1 overflow-hidden">
