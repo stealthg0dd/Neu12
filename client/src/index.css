@@ -3,151 +3,66 @@
 @tailwind utilities;
 
 :root {
-  --background: 220 30% 6%;
-  --foreground: 220 10% 90%;
-  --card: 220 25% 11%;
-  --card-foreground: 220 10% 90%;
-  --popover: 220 25% 11%;
-  --popover-foreground: 220 10% 90%;
-  --primary: 217 91% 60%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 220 20% 15%;
-  --secondary-foreground: 220 10% 80%;
-  --muted: 220 20% 14%;
-  --muted-foreground: 220 10% 65%;
-  --accent: 160 84% 39%;
-  --accent-foreground: 0 0% 100%;
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 100%;
-  --border: 220 20% 20%;
-  --input: 220 20% 15%;
-  --ring: 217 91% 60%;
-  --chart-1: 217 91% 60%;
-  --chart-2: 160 84% 39%;
-  --chart-3: 45 84% 60%;
-  --chart-4: 147 78% 42%;
-  --chart-5: 341 75% 51%;
-  --sidebar: 220 25% 11%;
-  --sidebar-foreground: 220 10% 90%;
-  --sidebar-primary: 217 91% 60%;
-  --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 160 84% 39%;
-  --sidebar-accent-foreground: 0 0% 100%;
-  --sidebar-border: 220 20% 20%;
-  --sidebar-ring: 217 91% 60%;
-  --font-sans: "Inter", sans-serif;
-  --font-serif: Georgia, serif;
-  --font-mono: "JetBrains Mono", monospace;
-  --radius: 8px;
-  --shadow-2xs: 0px 2px 0px 0px hsl(217, 91%, 60%, 0.00);
-  --shadow-xs: 0px 2px 0px 0px hsl(217, 91%, 60%, 0.00);
-  --shadow-sm: 0px 2px 0px 0px hsl(217, 91%, 60%, 0.00), 0px 1px 2px -1px hsl(217, 91%, 60%, 0.00);
-  --shadow: 0px 2px 0px 0px hsl(217, 91%, 60%, 0.00), 0px 1px 2px -1px hsl(217, 91%, 60%, 0.00);
-  --shadow-md: 0px 2px 0px 0px hsl(217, 91%, 60%, 0.00), 0px 2px 4px -1px hsl(217, 91%, 60%, 0.00);
-  --shadow-lg: 0px 2px 0px 0px hsl(217, 91%, 60%, 0.00), 0px 4px 6px -1px hsl(217, 91%, 60%, 0.00);
-  --shadow-xl: 0px 2px 0px 0px hsl(217, 91%, 60%, 0.00), 0px 8px 10px -1px hsl(217, 91%, 60%, 0.00);
-  --shadow-2xl: 0px 2px 0px 0px hsl(217, 91%, 60%, 0.00);
-  --tracking-normal: 0em;
-  --spacing: 0.25rem;
+  --color-primary: hsl(220, 90%, 56%);
+  --color-secondary: hsl(340, 82%, 52%);
+  --color-background: hsl(240, 10%, 8%);
+  --color-surface: hsl(240, 8%, 12%);
+  --color-accent: hsl(48, 100%, 67%);
+  --color-border: hsl(240, 10%, 20%);
+  --color-text: hsl(0, 0%, 100%);
 }
 
-.light {
-  --background: 0 0% 100%;
-  --foreground: 210 25% 7.8431%;
-  --card: 180 6.6667% 97.0588%;
-  --card-foreground: 210 25% 7.8431%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 210 25% 7.8431%;
-  --primary: 217 91% 60%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 210 25% 7.8431%;
-  --secondary-foreground: 0 0% 100%;
-  --muted: 240 1.9608% 90%;
-  --muted-foreground: 210 25% 7.8431%;
-  --accent: 160 84% 39%;
-  --accent-foreground: 0 0% 100%;
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 100%;
-  --border: 201.4286 30.4348% 90.9804%;
-  --input: 200 23.0769% 97.4510%;
-  --ring: 217 91% 60%;
-  --chart-1: 217 91% 60%;
-  --chart-2: 160 84% 39%;
-  --chart-3: 45 84% 60%;
-  --chart-4: 147 78% 42%;
-  --chart-5: 341 75% 51%;
-  --sidebar: 0 0% 100%;
-  --sidebar-foreground: 210 25% 7.8431%;
-  --sidebar-primary: 217 91% 60%;
-  --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 160 84% 39%;
-  --sidebar-accent-foreground: 0 0% 100%;
-  --sidebar-border: 201.4286 30.4348% 90.9804%;
-  --sidebar-ring: 217 91% 60%;
+@layer base {
+  body {
+    @apply bg-background text-text;
+    background-color: hsl(240, 10%, 8%) !important;
+    color: hsl(0, 0%, 100%) !important;
+  }
+  
+  html {
+    background-color: hsl(240, 10%, 8%) !important;
+    color: hsl(0, 0%, 100%) !important;
+  }
+  
+  #root {
+    background-color: hsl(240, 10%, 8%) !important;
+    color: hsl(0, 0%, 100%) !important;
+    min-height: 100vh;
+  }
 }
 
-/* Custom overrides for Neufin dark theme */
-html {
-  background-color: hsl(var(--background));
-}
-
-body {
-  font-family: var(--font-sans);
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
-}
-
-/* Force dark theme globally */
-html.dark,
-html[data-theme="dark"],
-html {
-  background-color: hsl(220 30% 6%) !important;
-  color: hsl(220 10% 90%) !important;
-}
-
-body.dark,
-body[data-theme="dark"],
-body {
-  background-color: hsl(220 30% 6%) !important;
-  color: hsl(220 10% 90%) !important;
-}
-
-/* Override any white backgrounds */
-#root {
-  background-color: hsl(220 30% 6%) !important;
-  color: hsl(220 10% 90%) !important;
-  min-height: 100vh;
-}
-
-/* Ensure all main containers use dark theme */
-.bg-white {
-  background-color: hsl(220 25% 11%) !important;
-}
-
-.text-black {
-  color: hsl(220 10% 90%) !important;
-}
-
-.dark {
-  color-scheme: dark;
-}
-
-/* Global text and background utilities */
-.text-foreground {
-  color: hsl(var(--foreground));
-}
-
+/* Override Tailwind utilities with theme colors */
 .bg-background {
-  background-color: hsl(var(--background));
+  background-color: var(--color-background) !important;
+}
+
+.bg-surface {
+  background-color: var(--color-surface) !important;
+}
+
+.text-text {
+  color: var(--color-text) !important;
 }
 
 .border-border {
-  border-color: hsl(var(--border));
+  border-color: var(--color-border) !important;
 }
 
-/* Ensure proper dark mode styling */
-* {
-  border-color: hsl(var(--border));
+/* Force dark backgrounds on common white elements */
+.bg-surface {
+  background-color: var(--color-surface) !important;
+}
+
+.bg-background {
+  background-color: var(--color-background) !important;
+}
+
+.text-black {
+  color: var(--color-text) !important;
+}
+
+.text-gray-900 {
+  color: var(--color-text) !important;
 }
 
 /* Custom scrollbar for dark theme */
@@ -156,14 +71,14 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(var(--muted));
+  background: var(--color-surface);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--border));
+  background: var(--color-border);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--primary));
+  background: var(--color-primary);
 }
