@@ -74,10 +74,61 @@ h1, h2, h3, h4, h5, h6, .text-xl, .text-2xl, .text-3xl, .text-4xl {
 }
 
 .text-black {
-  color: var(--color-text) !important;
+  color: var(--color-text-heading) !important;
 }
 
 .text-gray-900 {
+  color: var(--color-text-heading) !important;
+}
+
+.text-gray-700 {
+  color: var(--color-text) !important;
+}
+
+.text-gray-600 {
+  color: var(--color-text-muted) !important;
+}
+
+.text-gray-500 {
+  color: var(--color-text-muted) !important;
+}
+
+/* Logo and brand text enhancement */
+.logo-text, [data-testid*="logo"], [class*="logo"] {
+  color: var(--color-text-heading) !important;
+  font-weight: 700 !important;
+}
+
+/* Dashboard title and headings */
+.dashboard-title, .page-title {
+  color: var(--color-text-heading) !important;
+  font-weight: 600 !important;
+}
+
+/* Ensure all text is visible with proper contrast */
+* {
+  color: var(--color-text) !important;
+}
+
+p, span, div, label, button {
+  color: inherit !important;
+}
+
+/* Override specific dark text classes */
+.text-gray-800 {
+  color: var(--color-text-heading) !important;
+}
+
+.text-muted-foreground {
+  color: var(--color-text-muted) !important;
+}
+
+/* Card and component text visibility */
+.card-title, .card-header {
+  color: var(--color-text-heading) !important;
+}
+
+.card-content, .card-description {
   color: var(--color-text) !important;
 }
 

@@ -27,7 +27,7 @@ export default function Sidebar({ activeView, onViewChange }: SidebarProps) {
           <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
             <TrendingUp className="w-5 h-5 text-primary-foreground" />
           </div>
-          <h1 className="text-xl font-bold text-gray-800">Neufin</h1>
+          <h1 className="text-xl font-bold text-white logo-text">Neufin</h1>
         </div>
         <p className="text-xs text-muted-foreground mt-1">Sentiment Intelligence</p>
       </div>
@@ -44,7 +44,7 @@ export default function Sidebar({ activeView, onViewChange }: SidebarProps) {
               className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg font-medium transition-colors text-left ${
                 isActive 
                   ? "bg-primary text-primary-foreground" 
-                  : "text-muted-foreground hover:bg-secondary hover:text-gray-800"
+                  : "text-gray-300 hover:bg-secondary hover:text-white"
               }`}
               data-testid={`nav-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
             >
@@ -64,7 +64,7 @@ export default function Sidebar({ activeView, onViewChange }: SidebarProps) {
             </span>
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-800 truncate" data-testid="text-username">
+            <p className="text-sm font-medium text-white truncate" data-testid="text-username">
               {user?.firstName} {user?.lastName}
             </p>
             <p className="text-xs text-muted-foreground">Premium Member</p>
