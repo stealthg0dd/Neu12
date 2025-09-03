@@ -1,43 +1,88 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
-/* Force global dark theme */
-html, body {
-  background-color: hsl(240, 10%, 8%) !important;
+/* AGGRESSIVE DARK THEME ENFORCEMENT */
+html {
+  background: hsl(240, 10%, 8%) !important;
+  color: hsl(0, 0%, 100%) !important;
+}
+
+html.dark {
+  background: hsl(240, 10%, 8%) !important;
+  color: hsl(0, 0%, 100%) !important;
+}
+
+html[data-theme="dark"] {
+  background: hsl(240, 10%, 8%) !important;
   color: hsl(0, 0%, 100%) !important;
 }
 
 body {
-  min-height: 100vh;
-  background-color: hsl(240, 10%, 8%) !important;
+  background: hsl(240, 10%, 8%) !important;
+  color: hsl(0, 0%, 100%) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 100vh !important;
+}
+
+body.dark {
+  background: hsl(240, 10%, 8%) !important;
+  color: hsl(0, 0%, 100%) !important;
+}
+
+body[data-theme="dark"] {
+  background: hsl(240, 10%, 8%) !important;
   color: hsl(0, 0%, 100%) !important;
 }
 
 #root {
-  background-color: hsl(240, 10%, 8%) !important;
+  background: hsl(240, 10%, 8%) !important;
   color: hsl(0, 0%, 100%) !important;
-  min-height: 100vh;
+  min-height: 100vh !important;
 }
 
-/* Override any white backgrounds */
-.bg-white {
+/* Override ALL potential white backgrounds */
+.bg-white,
+.bg-gray-50,
+.bg-gray-100,
+.bg-slate-50,
+.bg-neutral-50,
+.bg-stone-50,
+.bg-zinc-50 {
   background-color: hsl(240, 8%, 12%) !important;
 }
 
-.bg-gray-50 {
-  background-color: hsl(240, 10%, 8%) !important;
-}
-
-/* Text visibility */
-h1, h2, h3, h4, h5, h6 {
+/* Override ALL potential dark text */
+.text-black,
+.text-gray-900,
+.text-gray-800,
+.text-slate-900,
+.text-neutral-900,
+.text-stone-900,
+.text-zinc-900 {
   color: hsl(0, 0%, 98%) !important;
 }
 
-.text-muted-foreground {
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  color: hsl(0, 0%, 98%) !important;
+  font-weight: 600 !important;
+}
+
+/* Muted text */
+.text-muted-foreground,
+.text-gray-500,
+.text-gray-600 {
   color: hsl(0, 0%, 75%) !important;
 }
 
+/* Universal dark override */
+* {
+  box-sizing: border-box;
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }

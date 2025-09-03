@@ -2,32 +2,37 @@ import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./index.css";
 
-// Force dark theme immediately
-document.documentElement.classList.add("dark");
-document.documentElement.setAttribute("data-theme", "dark");
-document.documentElement.style.backgroundColor = "hsl(240, 10%, 8%)";
-document.documentElement.style.color = "hsl(0, 0%, 100%)";
-
-// Apply to body as well
-document.body.classList.add("dark");
-document.body.style.backgroundColor = "hsl(240, 10%, 8%)";
-document.body.style.color = "hsl(0, 0%, 100%)";
-
-// Ensure it stays dark even after React renders
-const observer = new MutationObserver(() => {
-  if (!document.documentElement.classList.contains("dark")) {
-    document.documentElement.classList.add("dark");
-    document.documentElement.style.backgroundColor = "hsl(240, 10%, 8%)";
+// Immediately force dark theme with aggressive styling
+function forceDarkTheme() {
+  document.documentElement.classList.add("dark");
+  document.documentElement.setAttribute("data-theme", "dark");
+  document.documentElement.style.setProperty("background-color", "hsl(240, 10%, 8%)", "important");
+  document.documentElement.style.setProperty("color", "hsl(0, 0%, 100%)", "important");
+  
+  document.body.classList.add("dark");
+  document.body.style.setProperty("background-color", "hsl(240, 10%, 8%)", "important");
+  document.body.style.setProperty("color", "hsl(0, 0%, 100%)", "important");
+  
+  const root = document.getElementById("root");
+  if (root) {
+    root.style.setProperty("background-color", "hsl(240, 10%, 8%)", "important");
+    root.style.setProperty("color", "hsl(0, 0%, 100%)", "important");
+    root.style.setProperty("min-height", "100vh", "important");
   }
-  if (!document.body.classList.contains("dark")) {
-    document.body.classList.add("dark");
-    document.body.style.backgroundColor = "hsl(240, 10%, 8%)";
-  }
-});
+}
 
+// Apply immediately
+forceDarkTheme();
+
+// Keep applying it continuously
+setInterval(forceDarkTheme, 100);
+
+// Also use mutation observer
+const observer = new MutationObserver(forceDarkTheme);
 observer.observe(document.documentElement, {
   attributes: true,
-  attributeFilter: ["class", "style"]
+  childList: true,
+  subtree: true
 });
 
 createRoot(document.getElementById("root")!).render(<App />);
