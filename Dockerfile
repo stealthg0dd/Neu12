@@ -6,14 +6,14 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install all dependencies (including dev dependencies for build)
+# Install backend dependencies 
 RUN npm ci
 
 # Copy source code
 COPY . .
 
-# Build the application
-RUN npm run build
+# Copy dependencies to client and build frontend
+RUN cp -r node_modules client/ && cd client && npm run build && cd ..
 
 # Remove dev dependencies after build but keep runtime essentials
 RUN npm prune --production

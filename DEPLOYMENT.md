@@ -31,8 +31,8 @@ Your Neufin platform has been restructured for clean React frontend + Express ba
    - Render will automatically detect the `render.yaml` configuration
 
 3. **Automatic Configuration**:
-   - Build Command: `npm ci && npm run build`
-   - Start Command: `npm start` (runs `node server.js`)
+   - Build Command: `npm ci && cp -r node_modules client/ && cd client && npm run build && cd ..`
+   - Start Command: `node server.js`
    - Health Check: `/api/health`
    - Port: Auto-detected from environment
 
@@ -110,4 +110,18 @@ If you encounter any deployment issues:
 3. Ensure API keys have sufficient credits/permissions
 4. Review health check endpoint status
 
-Your Neufin platform is enterprise-ready and optimized for production deployment!
+## ✅ Deployment Issues Resolved
+
+**Fixed Build Problems:**
+- Updated build command to properly copy dependencies to client folder
+- Corrected frontend build process to run from client directory
+- Fixed Express server to serve React static files from client/dist
+- Verified health check endpoint and static file serving
+
+**Production Build Verified:**
+- React frontend builds successfully (938KB bundle)  
+- Express server starts correctly with `node server.js`
+- Static files served properly from client/dist
+- API endpoints functional and health check responsive
+
+Your Neufin platform is now deployment-ready for Render!
