@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { stockApi } from "./services/stockApi";
 import { sentimentAnalysis } from "./services/sentimentAnalysis";
 import { alphaSignature } from "./services/alphaSignature";
+import { analyzeChatMessage, validateChatInput } from "./services/chatAnalysis";
 import { authenticateToken, generateToken, hashPassword, comparePassword, type AuthRequest } from "./middleware/auth";
 import { insertUserSchema, insertPortfolioHoldingSchema, insertWatchlistSchema } from "@shared/schema";
 import { z } from "zod";
@@ -427,6 +428,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Search stocks error:', error);
       res.status(500).json({ message: 'Failed to search stocks' });
+    }
+  });
+
+  // AI Chat Analysis Route
+  app.post('/api/chat/analyze', authenticateToken, async (req: AuthRequest, res) => {
+    try {
+      const inputData = await validateChatInput({
+        ...req.body,
+        userId: req.user!.id,
+      });
+
+      const analysis = await analyzeChatMessage(inputData);
+      res.json(analysis);
+    } catch (error) {
+      console.error('Chat analysis error:', error);
+      if (error instanceof Error) {
+        res.status(400).json({ message: error.message });
+      } else {
+        res.status(500).json({ message: 'Failed to analyze chat message' });
+      }
     }
   });
 
