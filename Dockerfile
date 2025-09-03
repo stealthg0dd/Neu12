@@ -12,8 +12,8 @@ RUN npm ci
 # Copy source code
 COPY . .
 
-# Copy dependencies to client and build frontend
-RUN cp -r node_modules client/ && cd client && npm run build && cd ..
+# Copy dependencies to client and build frontend, bundle backend
+RUN cp -r node_modules client/ && cd client && npm run build && cd .. && npx esbuild server.js --bundle --platform=node --outfile=dist/server.js --format=esm --packages=external
 
 # Remove dev dependencies after build but keep runtime essentials
 RUN npm prune --production
@@ -22,4 +22,4 @@ RUN npm prune --production
 EXPOSE 5000
 
 # Start the application
-CMD ["node", "server.js"]
+CMD ["node", "dist/server.js"]

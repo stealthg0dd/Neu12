@@ -31,8 +31,8 @@ Your Neufin platform has been restructured for clean React frontend + Express ba
    - Render will automatically detect the `render.yaml` configuration
 
 3. **Automatic Configuration**:
-   - Build Command: `npm ci && cp -r node_modules client/ && cd client && npm run build && cd ..`
-   - Start Command: `node server.js`
+   - Build Command: `npm ci && cp -r node_modules client/ && cd client && npm run build && cd .. && npx esbuild server.js --bundle --platform=node --outfile=dist/server.js --format=esm --packages=external`
+   - Start Command: `node dist/server.js`
    - Health Check: `/api/health`
    - Port: Auto-detected from environment
 
@@ -112,16 +112,24 @@ If you encounter any deployment issues:
 
 ## ✅ Deployment Issues Resolved
 
-**Fixed Build Problems:**
-- Updated build command to properly copy dependencies to client folder
-- Corrected frontend build process to run from client directory
-- Fixed Express server to serve React static files from client/dist
-- Verified health check endpoint and static file serving
+**Fixed TypeScript Import Issues:**
+- Resolved "Unknown file extension .ts" error in production
+- Updated build process to use ESBuild bundling for backend
+- Backend now compiles to single JavaScript file (dist/server.js)
+- Frontend builds successfully to client/dist directory
 
 **Production Build Verified:**
-- React frontend builds successfully (938KB bundle)  
-- Express server starts correctly with `node server.js`
+- React frontend builds successfully (938KB bundle)
+- Express backend bundles to single 73.6KB JavaScript file
+- Server starts correctly with `node dist/server.js`
 - Static files served properly from client/dist
-- API endpoints functional and health check responsive
+- Health check endpoint responsive
+- All TypeScript import dependencies resolved
 
-Your Neufin platform is now deployment-ready for Render!
+**Deployment Process:**
+1. Install backend dependencies (`npm ci`)
+2. Copy dependencies to client and build React app
+3. Bundle Express backend with ESBuild (handles TypeScript imports)
+4. Start production server from bundled JavaScript
+
+Your Neufin platform is now fully deployment-ready for Render!

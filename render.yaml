@@ -3,8 +3,8 @@ services:
     name: neufin
     runtime: node
     plan: free
-    buildCommand: npm ci && cp -r node_modules client/ && cd client && npm run build && cd ..
-    startCommand: node server.js
+    buildCommand: npm ci && cp -r node_modules client/ && cd client && npm run build && cd .. && npx esbuild server.js --bundle --platform=node --outfile=dist/server.js --format=esm --packages=external
+    startCommand: node dist/server.js
     healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
